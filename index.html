@@ -6,7 +6,6 @@
 <title>プロフ帳 ★ My Profile</title>
 <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700;800;900&family=Zen+Maru+Gothic:wght@400;700&family=Kaisei+Decol:wght@700&family=Noto+Color+Emoji&display=swap" rel="stylesheet">
 <style>
-/* 絵文字を Noto Color Emoji に統一（端末差をなくす） */
 @font-face {
   font-family: 'EmojiFont';
   src: local('Noto Color Emoji'), local('Noto Emoji'),
@@ -21,18 +20,11 @@
   --bg2: #dda0f8;
   --bg3: #a0c8ff;
   --bg4: #ffd6a0;
-  --gem: #f8c8e0;
 }
 
 body {
   min-height: 100vh;
-  background: var(--bg1);
-  background: linear-gradient(135deg,
-    var(--bg1) 0%,
-    var(--bg2) 30%,
-    var(--bg3) 65%,
-    var(--bg4) 100%);
-  background-attachment: fixed;
+  background: linear-gradient(135deg, var(--bg1) 0%, var(--bg2) 30%, var(--bg3) 65%, var(--bg4) 100%);
   font-family: 'M PLUS Rounded 1c', 'EmojiFont', sans-serif;
   display: flex;
   flex-direction: column;
@@ -42,27 +34,27 @@ body {
   overflow-x: hidden;
 }
 
-/* 背景の大きなシンボル */
+/* 背景装飾シンボル（absolute に変更・Mac Chrome 黒画面バグ回避） */
 .bg-symbol {
-  position: fixed;
+  position: absolute;
   font-size: 200px;
   line-height: 1;
-  opacity: 0.07;
+  opacity: 0.09;
   pointer-events: none;
-  font-family: 'EmojiFont', serif;
+  font-family: serif;
   font-weight: 900;
-  color: white;
-  -webkit-text-stroke: 3px rgba(255,255,255,0.5);
-  text-stroke: 3px rgba(255,255,255,0.5);
+  color: transparent;
+  -webkit-text-stroke: 4px rgba(255,255,255,0.55);
   animation: spin-slow 30s linear infinite;
   z-index: 0;
 }
 .bg-symbol-2 {
-  position: fixed;
+  position: absolute;
   font-size: 120px;
-  opacity: 0.08;
+  opacity: 0.09;
   pointer-events: none;
-  color: white;
+  color: transparent;
+  -webkit-text-stroke: 3px rgba(255,255,255,0.5);
   animation: spin-slow 20s linear infinite reverse;
   z-index: 0;
 }
@@ -71,21 +63,19 @@ body {
   to   { transform: rotate(360deg); }
 }
 
-/* 背景の浮遊する絵文字装飾 */
 .float-bg {
-  position: fixed;
+  position: absolute;
   pointer-events: none;
   animation: floaty 7s ease-in-out infinite;
   z-index: 0;
   font-size: 20px;
-  opacity: 0.35;
+  opacity: 0.3;
 }
 @keyframes floaty {
   0%,100% { transform: translateY(0) rotate(-5deg) scale(1); }
   50%      { transform: translateY(-18px) rotate(5deg) scale(1.08); }
 }
 
-/* ページタイトル */
 .page-title {
   font-size: 30px;
   font-weight: 900;
@@ -98,30 +88,27 @@ body {
 }
 .page-sub {
   font-size: 12px;
-  color: rgba(255,255,255,0.85);
+  color: rgba(255,255,255,0.9);
   text-align: center;
   letter-spacing: 6px;
   margin-bottom: 26px;
   position: relative; z-index: 1;
 }
 
-/* ─── 入力カード（すりガラス） ─── */
+/* ─── 入力カード ─── */
 .card {
-  background: rgba(255,255,255,0.38);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-  border: 1.5px solid rgba(255,255,255,0.7);
+  background: rgba(255,255,255,0.93);
+  border: 1.5px solid rgba(255,255,255,0.9);
   border-radius: 24px;
   padding: 28px 26px 34px;
   width: 100%;
   max-width: 520px;
   position: relative;
   z-index: 1;
-  box-shadow: 0 8px 32px rgba(200,80,140,0.18), 0 2px 8px rgba(255,255,255,0.3) inset;
+  box-shadow: 0 8px 32px rgba(200,80,140,0.18);
 }
 
 .form-section { display: flex; flex-direction: column; gap: 14px; }
-
 .field { display: flex; flex-direction: column; gap: 5px; }
 
 .field-label {
@@ -132,38 +119,64 @@ body {
   font-weight: 800;
   color: #8a2060;
   letter-spacing: 2px;
-  text-shadow: 0 1px 2px rgba(255,255,255,0.8);
 }
 
 .field-input {
-  background: rgba(255,255,255,0.65);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1.5px solid rgba(240,140,190,0.6);
+  background: #fff;
+  border: 1.5px solid rgba(240,140,190,0.8);
   border-radius: 12px;
   padding: 10px 14px;
   font-size: 14px;
   font-family: 'M PLUS Rounded 1c', 'EmojiFont', sans-serif;
   color: #4a1030;
   outline: none;
-  transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+  transition: border-color 0.2s, box-shadow 0.2s;
   width: 100%;
 }
 .field-input:focus {
   border-color: #e91e8c;
-  background: rgba(255,255,255,0.85);
+  background: #fff;
   box-shadow: 0 0 0 3px rgba(233,30,140,0.15);
 }
-.field-input::placeholder { color: rgba(180,80,120,0.5); font-size: 12px; }
+.field-input::placeholder { color: rgba(180,80,120,0.45); font-size: 12px; }
 textarea.field-input { resize: vertical; min-height: 78px; line-height: 1.6; }
+
+/* 血液型セレクト */
+.blood-row {
+  display: flex;
+  gap: 8px;
+}
+.blood-btn {
+  flex: 1;
+  padding: 9px 4px;
+  border: 1.5px solid rgba(240,140,190,0.7);
+  border-radius: 12px;
+  background: #fff;
+  font-family: 'M PLUS Rounded 1c', 'EmojiFont', sans-serif;
+  font-size: 15px;
+  font-weight: 800;
+  color: #b05080;
+  cursor: pointer;
+  transition: all 0.15s;
+  text-align: center;
+}
+.blood-btn:hover {
+  border-color: #e91e8c;
+  background: #fff0f6;
+}
+.blood-btn.selected {
+  background: linear-gradient(135deg, #f48fb1, #ce93d8);
+  border-color: transparent;
+  color: white;
+  box-shadow: 0 3px 10px rgba(200,80,160,0.3);
+}
+.blood-hint { font-size: 10px; color: rgba(120,40,80,0.6); margin-top: 2px; }
 
 /* 誕生日 */
 .bday-row { display: flex; align-items: center; gap: 5px; }
 .bday-inp {
-  background: rgba(255,255,255,0.65);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1.5px solid rgba(240,140,190,0.6);
+  background: #fff;
+  border: 1.5px solid rgba(240,140,190,0.8);
   border-radius: 12px;
   padding: 10px 6px;
   font-size: 15px;
@@ -176,15 +189,14 @@ textarea.field-input { resize: vertical; min-height: 78px; line-height: 1.6; }
 }
 .bday-inp:focus {
   border-color: #e91e8c;
-  background: rgba(255,255,255,0.85);
   box-shadow: 0 0 0 3px rgba(233,30,140,0.15);
 }
-.bday-inp::placeholder { color: rgba(180,80,120,0.5); font-size: 11px; }
+.bday-inp::placeholder { color: rgba(180,80,120,0.45); font-size: 11px; }
 #f-bday-y { width: 76px; }
 #f-bday-m { width: 52px; }
 #f-bday-d { width: 52px; }
 .bday-sep { font-size: 15px; color: #c05080; font-weight: 800; flex-shrink: 0; }
-.bday-hint { font-size: 10px; color: rgba(120,40,80,0.75); margin-top: 3px; line-height: 1.5; }
+.bday-hint { font-size: 10px; color: rgba(120,40,80,0.6); margin-top: 3px; line-height: 1.5; }
 
 .divider {
   display: flex; align-items: center; gap: 10px;
@@ -209,9 +221,7 @@ textarea.field-input { resize: vertical; min-height: 78px; line-height: 1.6; }
 .btn-generate:hover { transform: translateY(-2px); box-shadow: 0 6px 0 rgba(180,50,120,0.4), 0 12px 28px rgba(200,80,180,0.4); }
 .btn-generate:active { transform: translateY(2px); box-shadow: 0 2px 0 rgba(180,50,120,0.4); }
 
-/* ═══════════════════════════════════
-   OUTPUT CARD
-═══════════════════════════════════ */
+/* ═══ OUTPUT ═══ */
 #output-section {
   display: none; width: 100%; max-width: 520px; margin-top: 32px;
   position: relative; z-index: 1;
@@ -222,11 +232,10 @@ textarea.field-input { resize: vertical; min-height: 78px; line-height: 1.6; }
   overflow: hidden;
   border: 2px solid rgba(255,255,255,0.6);
   font-family: 'Zen Maru Gothic', 'EmojiFont', sans-serif;
-  box-shadow: 0 12px 40px rgba(180,60,140,0.25), 0 4px 16px rgba(100,100,200,0.15);
+  box-shadow: 0 12px 40px rgba(180,60,140,0.25);
   position: relative;
 }
 
-/* ── ヘッダー ── */
 .output-header {
   padding: 22px 24px 18px;
   position: relative;
@@ -234,7 +243,26 @@ textarea.field-input { resize: vertical; min-height: 78px; line-height: 1.6; }
   min-height: 180px;
 }
 
-/* アウトライン大文字シンボル（ヘッダー背景） */
+/* 血液型バッジ（ヘッダー右上） */
+.blood-badge-big {
+  position: absolute;
+  top: 14px; right: 18px;
+  width: 52px; height: 52px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.28);
+  border: 2px solid rgba(255,255,255,0.7);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  color: white; font-weight: 900;
+  z-index: 3;
+}
+.blood-badge-big .blood-type-text {
+  font-size: 18px; line-height: 1; letter-spacing: 0;
+}
+.blood-badge-big .blood-label {
+  font-size: 8px; letter-spacing: 1px; opacity: 0.85;
+}
+
 .hdr-symbol-big {
   position: absolute;
   right: -10px; bottom: -20px;
@@ -242,8 +270,7 @@ textarea.field-input { resize: vertical; min-height: 78px; line-height: 1.6; }
   line-height: 1;
   color: transparent;
   -webkit-text-stroke: 3px rgba(255,255,255,0.35);
-  text-stroke: 3px rgba(255,255,255,0.35);
-  font-family: 'EmojiFont', serif;
+  font-family: serif;
   pointer-events: none;
   user-select: none;
   letter-spacing: -10px;
@@ -255,12 +282,10 @@ textarea.field-input { resize: vertical; min-height: 78px; line-height: 1.6; }
   line-height: 1;
   color: transparent;
   -webkit-text-stroke: 2px rgba(255,255,255,0.3);
-  text-stroke: 2px rgba(255,255,255,0.3);
   font-family: 'EmojiFont', serif;
   pointer-events: none;
   user-select: none;
 }
-/* 花・宝石のフローティング（ヘッダー内） */
 .hdr-gem-deco {
   position: absolute;
   font-size: 28px;
@@ -274,23 +299,15 @@ textarea.field-input { resize: vertical; min-height: 78px; line-height: 1.6; }
 }
 
 .hdr-ticker {
-  font-size: 10px;
-  color: rgba(255,255,255,0.8);
-  letter-spacing: 5px;
-  margin-bottom: 12px;
+  font-size: 10px; color: rgba(255,255,255,0.8);
+  letter-spacing: 5px; margin-bottom: 12px;
 }
-
 .output-title {
-  font-size: 20px;
-  font-weight: 700;
-  color: white;
-  text-shadow: 1px 1px 0 rgba(0,0,0,0.18), 0 2px 8px rgba(0,0,0,0.1);
-  letter-spacing: 3px;
-  margin-bottom: 12px;
+  font-size: 20px; font-weight: 700; color: white;
+  text-shadow: 1px 1px 0 rgba(0,0,0,0.18);
+  letter-spacing: 3px; margin-bottom: 12px;
   position: relative; z-index: 2;
 }
-
-/* バッジ行 */
 .zodiac-row {
   display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 10px;
   position: relative; z-index: 2;
@@ -301,38 +318,29 @@ textarea.field-input { resize: vertical; min-height: 78px; line-height: 1.6; }
   border-radius: 20px;
   padding: 4px 12px;
   font-size: 12px; color: white; font-weight: 700;
-  letter-spacing: 0.5px;
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-  white-space: nowrap;
+  letter-spacing: 0.5px; white-space: nowrap;
 }
 .zodiac-badge.gem-badge {
   background: rgba(255,255,255,0.38);
   border-color: rgba(255,255,255,0.8);
   font-size: 13px;
 }
-
 .hdr-ticker-bot {
-  font-size: 10px;
-  color: rgba(255,255,255,0.8);
-  letter-spacing: 5px;
-  position: relative; z-index: 2;
+  font-size: 10px; color: rgba(255,255,255,0.8);
+  letter-spacing: 5px; position: relative; z-index: 2;
 }
 
-/* ── ボディ（すりガラス） ── */
+/* ── ボディ ── */
 .output-body {
-  background: rgba(255,255,255,0.52);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  background: #fff;
   padding: 22px 22px 24px;
   position: relative;
 }
 
-/* ボディ背景の薄い絵文字パターン */
 .body-pattern {
   position: absolute; inset: 0;
   pointer-events: none; overflow: hidden; z-index: 0;
-  opacity: 0.06;
+  opacity: 0.055;
   font-size: 28px;
   display: flex; flex-wrap: wrap; align-content: flex-start;
   gap: 18px; padding: 10px;
@@ -350,8 +358,26 @@ textarea.field-input { resize: vertical; min-height: 78px; line-height: 1.6; }
   letter-spacing: 4px;
   text-shadow: 0 1px 3px rgba(200,80,140,0.2);
 }
-.out-bday {
-  font-size: 12px; color: #b05080; margin-top: 4px; letter-spacing: 2px;
+.out-bday { font-size: 12px; color: #b05080; margin-top: 4px; letter-spacing: 2px; }
+
+/* 血液型 + 誕生日の横並びブロック */
+.out-meta-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 6px;
+  flex-wrap: wrap;
+}
+.out-blood-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 12px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 800;
+  border: 1.5px solid;
 }
 
 .out-grid {
@@ -359,12 +385,10 @@ textarea.field-input { resize: vertical; min-height: 78px; line-height: 1.6; }
   margin-bottom: 12px; position: relative; z-index: 1;
 }
 .out-item {
-  background: rgba(255,255,255,0.6);
-  border: 1px solid rgba(240,160,200,0.45);
+  background: #fff5f9;
+  border: 1px solid rgba(240,160,200,0.6);
   border-radius: 14px;
   padding: 10px 12px;
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
 }
 .out-item.full { grid-column: 1 / -1; }
 .out-key {
@@ -378,10 +402,8 @@ textarea.field-input { resize: vertical; min-height: 78px; line-height: 1.6; }
   border: 1.5px solid rgba(200,140,200,0.5);
   border-radius: 16px;
   padding: 14px 16px; margin-top: 4px;
-  background: rgba(255,255,255,0.55);
+  background: #fdf5ff;
   position: relative; z-index: 1;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
 }
 .out-message-label {
   font-size: 10px; font-weight: 800; color: #b040a0;
@@ -389,7 +411,6 @@ textarea.field-input { resize: vertical; min-height: 78px; line-height: 1.6; }
 }
 .out-message-text { font-size: 13px; color: #2a0820; line-height: 1.8; white-space: pre-wrap; }
 
-/* ── フッター ── */
 .output-footer {
   padding: 12px 22px; text-align: center;
   font-size: 11px; letter-spacing: 4px;
@@ -401,36 +422,45 @@ textarea.field-input { resize: vertical; min-height: 78px; line-height: 1.6; }
 .btn-download {
   display: block; margin: 20px auto 0; width: 100%;
   padding: 13px;
-  background: rgba(255,255,255,0.45);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: #fff;
   color: #b03070;
-  border: 2px solid rgba(255,255,255,0.7);
+  border: 2px solid rgba(240,140,190,0.6);
   border-radius: 50px;
   font-family: 'M PLUS Rounded 1c', 'EmojiFont', sans-serif;
   font-size: 14px; font-weight: 800; letter-spacing: 2px;
   cursor: pointer; transition: all 0.15s;
-  box-shadow: 0 4px 16px rgba(200,80,140,0.2);
+  box-shadow: 0 4px 16px rgba(200,80,140,0.15);
 }
-.btn-download:hover { background: rgba(255,255,255,0.65); transform: translateY(-1px); }
+.btn-download:hover { background: #fff0f6; transform: translateY(-1px); }
 
 .btn-tweet {
   display: flex; align-items: center; justify-content: center; gap: 8px;
-  margin: 10px auto 0; width: 100%;
-  padding: 13px;
-  background: rgba(0,0,0,0.78);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  color: #ffffff;
-  border: 2px solid rgba(255,255,255,0.22);
-  border-radius: 50px;
+  margin: 10px auto 0; width: 100%; padding: 13px;
+  background: #111; color: #fff;
+  border: none; border-radius: 50px;
   font-family: 'M PLUS Rounded 1c', 'EmojiFont', sans-serif;
   font-size: 14px; font-weight: 800; letter-spacing: 2px;
-  cursor: pointer; transition: all 0.15s;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+  cursor: pointer; transition: background 0.15s, transform 0.15s;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
 }
-.btn-tweet:hover { background: rgba(0,0,0,0.92); transform: translateY(-1px); }
+.btn-tweet:hover { background: #333; transform: translateY(-1px); }
+.btn-tweet:disabled { opacity: 0.6; cursor: wait; transform: none; }
 .btn-tweet svg { flex-shrink: 0; }
+
+/* トースト */
+.copy-toast {
+  position: fixed; bottom: 32px; left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: rgba(20,20,20,0.92); color: white;
+  padding: 12px 24px; border-radius: 50px;
+  font-family: 'M PLUS Rounded 1c', 'EmojiFont', sans-serif;
+  font-size: 13px; font-weight: 700; letter-spacing: 1px;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.3s, transform 0.3s;
+  z-index: 9999; white-space: nowrap;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+.copy-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
 @keyframes twinkle {
   from { opacity: 0.4; transform: scale(0.85) rotate(-8deg); }
@@ -439,6 +469,8 @@ textarea.field-input { resize: vertical; min-height: 78px; line-height: 1.6; }
 </style>
 </head>
 <body>
+
+<div id="copy-toast" class="copy-toast"></div>
 
 <!-- 背景浮遊絵文字 -->
 <div class="float-bg" style="top:5%;left:4%;animation-delay:0s;">🌸</div>
@@ -451,7 +483,6 @@ textarea.field-input { resize: vertical; min-height: 78px; line-height: 1.6; }
 <div class="float-bg" style="top:85%;right:4%;animation-delay:0.8s;">⭐</div>
 <div class="float-bg" style="top:92%;left:10%;animation-delay:3.5s;font-size:13px;">💫</div>
 
-<!-- 背景の大シンボル -->
 <div class="bg-symbol" id="bg-sym-main" style="top:5%;left:-2%;">♡</div>
 <div class="bg-symbol-2" id="bg-sym-sub" style="bottom:10%;right:5%;">★</div>
 
@@ -479,6 +510,16 @@ textarea.field-input { resize: vertical; min-height: 78px; line-height: 1.6; }
         <span class="bday-sep">日</span>
       </div>
       <div class="bday-hint">🔒 西暦は星座・干支・宝石・花の算出のみ。プロフには表示されません</div>
+    </div>
+
+    <div class="field">
+      <div class="field-label">🩸 血液型</div>
+      <div class="blood-row" id="blood-row">
+        <button type="button" class="blood-btn" data-type="A"  onclick="selectBlood('A')">A型</button>
+        <button type="button" class="blood-btn" data-type="B"  onclick="selectBlood('B')">B型</button>
+        <button type="button" class="blood-btn" data-type="O"  onclick="selectBlood('O')">O型</button>
+        <button type="button" class="blood-btn" data-type="AB" onclick="selectBlood('AB')">AB型</button>
+      </div>
     </div>
 
     <div class="field">
@@ -531,14 +572,14 @@ textarea.field-input { resize: vertical; min-height: 78px; line-height: 1.6; }
 
 <div id="output-section">
   <div class="output-card" id="output-card">
-    <div class="output-header" id="out-header">
-      <!-- JS で挿入 -->
-    </div>
+    <div class="output-header" id="out-header"></div>
     <div class="output-body" id="out-body">
       <div class="body-pattern" id="body-pattern"></div>
       <div class="out-name-block">
         <div class="out-name" id="out-name"></div>
-        <div class="out-bday" id="out-bday"></div>
+        <div class="out-meta-row" id="out-meta-row">
+          <div class="out-bday" id="out-bday"></div>
+        </div>
       </div>
       <div class="out-grid" id="out-grid"></div>
       <div class="out-message-box" id="out-msgbox" style="display:none">
@@ -551,16 +592,13 @@ textarea.field-input { resize: vertical; min-height: 78px; line-height: 1.6; }
   <button class="btn-download" onclick="downloadCard()">📥 画像として保存する 💾</button>
   <button class="btn-tweet" id="btn-tweet" onclick="postToX()">
     <svg width="18" height="18" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.253 5.622 5.911-5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-    <!-- 𝕏 でポストする -->
-    でポストする
+    𝕏 でポストする
   </button>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script>
-// ══════════════════════════════════════════════
-//  数字のみ入力 & 自動フォーカス
-// ══════════════════════════════════════════════
+// ── 数字のみ入力 & 自動フォーカス ─────────────────────────────
 (function() {
   var nexts = { 'f-bday-y':'f-bday-m', 'f-bday-m':'f-bday-d' };
   var lens  = { 'f-bday-y':4, 'f-bday-m':2, 'f-bday-d':2 };
@@ -573,58 +611,49 @@ textarea.field-input { resize: vertical; min-height: 78px; line-height: 1.6; }
   });
 })();
 
-// ══════════════════════════════════════════════
-//  星座データ
-// ══════════════════════════════════════════════
-var ZODIAC = [
-  // 0=やぎ(12/22〜1/19), 1=みずがめ, 2=うお, 3=おひつじ, 4=おうし,
-  // 5=ふたご, 6=かに, 7=しし, 8=おとめ, 9=てんびん, 10=さそり, 11=いて
-  { name:'やぎ座',    emoji:'🐐', sym:'♑',
-    grad:['#c8b898','#e8dac8','#9a7a50','#f5e8d8'], accent:'#5c3a18', text:'#3a200a' },
-  { name:'みずがめ座', emoji:'🫧',  sym:'♒',
-    grad:['#7ad0f0','#b8e8ff','#3a98d8','#e0f4ff'], accent:'#0a5888', text:'#082840' },
-  { name:'うお座',    emoji:'🐟', sym:'♓',
-    grad:['#98b8e8','#c8d8f8','#5878c8','#dce8ff'], accent:'#283888', text:'#102050' },
-  { name:'おひつじ座', emoji:'🐏', sym:'♈',
-    grad:['#ff9888','#ffd8c8','#e84830','#fff0e8'], accent:'#901820', text:'#500010' },
-  { name:'おうし座',  emoji:'🌷', sym:'♉',
-    grad:['#88d888','#c8f0b8','#409848','#e8fce0'], accent:'#205828', text:'#0a3010' },
-  { name:'ふたご座',  emoji:'👯', sym:'♊',
-    grad:['#f8e050','#fff8a0','#d8a808','#fffce0'], accent:'#806000', text:'#402800' },
-  { name:'かに座',    emoji:'🦀', sym:'♋',
-    grad:['#e8a8e0','#fce0f8','#c060c8','#fff0ff'], accent:'#780878', text:'#400040' },
-  { name:'しし座',    emoji:'🦁', sym:'♌',
-    grad:['#f8c840','#fff0a0','#e09000','#fff8e0'], accent:'#805000', text:'#402000' },
-  { name:'おとめ座',  emoji:'🌾', sym:'♍',
-    grad:['#a8d868','#d8f8a8','#589830','#f0fce0'], accent:'#285818', text:'#102008' },
-  { name:'てんびん座', emoji:'⚖️', sym:'♎',
-    grad:['#d098e8','#f0d8ff','#a060d8','#faf0ff'], accent:'#601890', text:'#300850' },
-  { name:'さそり座',  emoji:'🦂', sym:'♏',
-    grad:['#e06888','#f8b8d0','#b03050','#fce8f0'], accent:'#700030', text:'#380018' },
-  { name:'いて座',    emoji:'🏹', sym:'♐',
-    grad:['#7898e8','#c0d0ff','#3858c8','#dce8ff'], accent:'#182070', text:'#081038' },
-];
+// ── 血液型 ────────────────────────────────────────────────────
+var selectedBlood = '';
 
-// 各月の「この日以降は次の星座になる」境界日
-// 例: 1月20日以降はみずがめ座、1月19日以前はやぎ座
-// [1月,2月,3月,4月,5月,6月,7月,8月,9月,10月,11月,12月]
-var ZODIAC_BOUNDS = [20,19,21,20,21,22,23,23,23,24,23,22];
-// 各月の「前半（境界日未満）」に対応する星座インデックス
-// 例: 1月19日以前→やぎ座(0), 1月20日以降→みずがめ座(1)
-//     5月20日以前→おうし座(4), 5月21日以降→ふたご座(5)
-var ZODIAC_EARLY = [0,1,2,3,4,5,6,7,8,9,10,11]; // 各月前半の星座
-var ZODIAC_LATE  = [1,2,3,4,5,6,7,8,9,10,11,0]; // 各月後半の星座
-
-function getZodiac(mo, da) {
-  var idx = (da < ZODIAC_BOUNDS[mo-1])
-    ? ZODIAC_EARLY[mo-1]
-    : ZODIAC_LATE[mo-1];
-  return ZODIAC[idx];
+function selectBlood(type) {
+  selectedBlood = type;
+  document.querySelectorAll('.blood-btn').forEach(function(btn) {
+    btn.classList.toggle('selected', btn.dataset.type === type);
+  });
 }
 
-// ══════════════════════════════════════════════
-//  干支データ
-// ══════════════════════════════════════════════
+// 血液型カラーテーマ
+var BLOOD_THEME = {
+  'A':  { color:'#e84848', light:'#ffe0e0', label:'几帳面で真面目', emoji:'🔴' },
+  'B':  { color:'#f8a020', light:'#fff0d0', label:'マイペースで自由', emoji:'🟠' },
+  'O':  { color:'#3898e8', light:'#dceeff', label:'大らかでリーダー気質', emoji:'🔵' },
+  'AB': { color:'#9860d8', light:'#eedeff', label:'合理的でミステリアス', emoji:'🟣' },
+};
+
+// ── 星座データ ────────────────────────────────────────────────
+var ZODIAC = [
+  { name:'やぎ座',    emoji:'🐐', sym:'♑', grad:['#c8b898','#e8dac8','#9a7a50','#f5e8d8'], accent:'#5c3a18' },
+  { name:'みずがめ座', emoji:'🫧',  sym:'♒', grad:['#7ad0f0','#b8e8ff','#3a98d8','#e0f4ff'], accent:'#0a5888' },
+  { name:'うお座',    emoji:'🐟', sym:'♓', grad:['#98b8e8','#c8d8f8','#5878c8','#dce8ff'], accent:'#283888' },
+  { name:'おひつじ座', emoji:'🐏', sym:'♈', grad:['#ff9888','#ffd8c8','#e84830','#fff0e8'], accent:'#901820' },
+  { name:'おうし座',  emoji:'🌷', sym:'♉', grad:['#88d888','#c8f0b8','#409848','#e8fce0'], accent:'#205828' },
+  { name:'ふたご座',  emoji:'👯', sym:'♊', grad:['#f8e050','#fff8a0','#d8a808','#fffce0'], accent:'#806000' },
+  { name:'かに座',    emoji:'🦀', sym:'♋', grad:['#e8a8e0','#fce0f8','#c060c8','#fff0ff'], accent:'#780878' },
+  { name:'しし座',    emoji:'🦁', sym:'♌', grad:['#f8c840','#fff0a0','#e09000','#fff8e0'], accent:'#805000' },
+  { name:'おとめ座',  emoji:'🌾', sym:'♍', grad:['#a8d868','#d8f8a8','#589830','#f0fce0'], accent:'#285818' },
+  { name:'てんびん座', emoji:'⚖️', sym:'♎', grad:['#d098e8','#f0d8ff','#a060d8','#faf0ff'], accent:'#601890' },
+  { name:'さそり座',  emoji:'🦂', sym:'♏', grad:['#e06888','#f8b8d0','#b03050','#fce8f0'], accent:'#700030' },
+  { name:'いて座',    emoji:'🏹', sym:'♐', grad:['#7898e8','#c0d0ff','#3858c8','#dce8ff'], accent:'#182070' },
+];
+
+var ZODIAC_BOUNDS = [20,19,21,20,21,22,23,23,23,24,23,22];
+var ZODIAC_EARLY  = [0,1,2,3,4,5,6,7,8,9,10,11];
+var ZODIAC_LATE   = [1,2,3,4,5,6,7,8,9,10,11,0];
+
+function getZodiac(mo, da) {
+  return ZODIAC[(da < ZODIAC_BOUNDS[mo-1]) ? ZODIAC_EARLY[mo-1] : ZODIAC_LATE[mo-1]];
+}
+
+// ── 干支データ ────────────────────────────────────────────────
 var ETO = [
   { name:'ねずみ年', emoji:'🐭', c:'#b0b8f0' },
   { name:'うし年',   emoji:'🐮', c:'#d0b898' },
@@ -639,164 +668,76 @@ var ETO = [
   { name:'いぬ年',   emoji:'🐶', c:'#d8b888' },
   { name:'いのしし年',emoji:'🐗', c:'#c8a090' },
 ];
-
 function getEto(yr) { return ETO[((yr-1900)%12+12)%12]; }
 
-// ══════════════════════════════════════════════
-//  誕生石（月別）
-// ══════════════════════════════════════════════
+// ── 誕生石 ────────────────────────────────────────────────────
 var GEMS = [
-  { name:'ガーネット',     emoji:'💎', color:'#c82020', light:'#f8c8c8', desc:'情熱と絆の石' },   // 1月
-  { name:'アメシスト',     emoji:'💜', color:'#8040c0', light:'#e8d0f8', desc:'知性と直感の石' }, // 2月
-  { name:'アクアマリン',   emoji:'🩵', color:'#40a8c8', light:'#c8f0f8', desc:'幸福と清らかさ' }, // 3月
-  { name:'ダイヤモンド',   emoji:'💠', color:'#a0c8f8', light:'#e8f4ff', desc:'純粋と永遠の愛' }, // 4月
-  { name:'エメラルド',     emoji:'💚', color:'#208848', light:'#b8f0c8', desc:'幸運と希望の石' }, // 5月
-  { name:'ムーンストーン', emoji:'🌙', color:'#b0a8e0', light:'#e8e8ff', desc:'女性らしさと直感' },// 6月
-  { name:'ルビー',         emoji:'❤️', color:'#c81028', light:'#ffc8d0', desc:'愛と情熱の石' },  // 7月
-  { name:'ペリドット',     emoji:'🌿', color:'#88b820', light:'#e0f8a0', desc:'太陽のエネルギー' },// 8月
-  { name:'サファイア',     emoji:'💙', color:'#1848b0', light:'#c0d8ff', desc:'誠実と品格の石' }, // 9月
-  { name:'ピンクトルマリン',emoji:'🩷', color:'#e04080', light:'#ffd0e8', desc:'優しさと愛の石' },// 10月
-  { name:'トパーズ',       emoji:'🟡', color:'#e09820', light:'#fce8a0', desc:'知恵と勇気の石' }, // 11月
-  { name:'ターコイズ',     emoji:'🫐', color:'#30a0a8', light:'#c0f0f0', desc:'成功と幸福の象徴' },// 12月
+  { name:'ガーネット',      emoji:'💎', color:'#c82020', light:'#f8c8c8' },
+  { name:'アメシスト',      emoji:'💜', color:'#8040c0', light:'#e8d0f8' },
+  { name:'アクアマリン',    emoji:'🩵', color:'#40a8c8', light:'#c8f0f8' },
+  { name:'ダイヤモンド',    emoji:'💠', color:'#a0c8f8', light:'#e8f4ff' },
+  { name:'エメラルド',      emoji:'💚', color:'#208848', light:'#b8f0c8' },
+  { name:'ムーンストーン',  emoji:'🌙', color:'#b0a8e0', light:'#e8e8ff' },
+  { name:'ルビー',          emoji:'❤️', color:'#c81028', light:'#ffc8d0' },
+  { name:'ペリドット',      emoji:'🌿', color:'#88b820', light:'#e0f8a0' },
+  { name:'サファイア',      emoji:'💙', color:'#1848b0', light:'#c0d8ff' },
+  { name:'ピンクトルマリン',emoji:'🩷', color:'#e04080', light:'#ffd0e8' },
+  { name:'トパーズ',        emoji:'🟡', color:'#e09820', light:'#fce8a0' },
+  { name:'ターコイズ',      emoji:'🫐', color:'#30a0a8', light:'#c0f0f0' },
 ];
-
 function getGem(mo) { return GEMS[mo-1]; }
 
-// ══════════════════════════════════════════════
-//  誕生花（月別）
-// ══════════════════════════════════════════════
+// ── 誕生花 ────────────────────────────────────────────────────
 var FLOWERS = [
-  { name:'スノードロップ', emoji:'🌼', color:'#f0f0f8', sub:'#d0d8f8', meaning:'希望・純粋' },  // 1月
-  { name:'バイオレット',   emoji:'🌸', color:'#d0a0f0', sub:'#efe0ff', meaning:'誠実・愛' },      // 2月
-  { name:'デイジー',       emoji:'🌻', color:'#f8f040', sub:'#fffdc0', meaning:'希望・無邪気' },  // 3月
-  { name:'スイートピー',   emoji:'🌺', color:'#f8a0c8', sub:'#fce0ef', meaning:'門出・優しい思い出' }, // 4月
-  { name:'スズラン',       emoji:'🌱', color:'#a0e0b0', sub:'#d8f8e0', meaning:'幸福・純粋' },    // 5月
-  { name:'バラ',           emoji:'🌹', color:'#e83060', sub:'#ffc0d0', meaning:'愛・情熱' },      // 6月
-  { name:'ラベンダー',     emoji:'💜', color:'#b080e0', sub:'#e8d8ff', meaning:'献身・沈黙' },    // 7月
-  { name:'ヒマワリ',       emoji:'🌻', color:'#f8c820', sub:'#fff8a0', meaning:'憧れ・輝き' },    // 8月
-  { name:'アスター',       emoji:'🌸', color:'#d060c8', sub:'#f8d0f8', meaning:'愛・信頼' },      // 9月
-  { name:'コスモス',       emoji:'🌸', color:'#f080a8', sub:'#ffe0ef', meaning:'乙女の純潔' },    // 10月
-  { name:'シクラメン',     emoji:'🌷', color:'#e050a0', sub:'#ffd0e8', meaning:'はにかみ・内気' },// 11月
-  { name:'ポインセチア',   emoji:'🌺', color:'#e02030', sub:'#ffc0c8', meaning:'祝福・喜び' },    // 12月
+  { name:'スノードロップ', emoji:'🌼', color:'#f0f0f8', sub:'#d0d8f8' },
+  { name:'バイオレット',   emoji:'🌸', color:'#d0a0f0', sub:'#efe0ff' },
+  { name:'デイジー',       emoji:'🌻', color:'#f8f040', sub:'#fffdc0' },
+  { name:'スイートピー',   emoji:'🌺', color:'#f8a0c8', sub:'#fce0ef' },
+  { name:'スズラン',       emoji:'🌱', color:'#a0e0b0', sub:'#d8f8e0' },
+  { name:'バラ',           emoji:'🌹', color:'#e83060', sub:'#ffc0d0' },
+  { name:'ラベンダー',     emoji:'💜', color:'#b080e0', sub:'#e8d8ff' },
+  { name:'ヒマワリ',       emoji:'🌻', color:'#f8c820', sub:'#fff8a0' },
+  { name:'アスター',       emoji:'🌸', color:'#d060c8', sub:'#f8d0f8' },
+  { name:'コスモス',       emoji:'🌸', color:'#f080a8', sub:'#ffe0ef' },
+  { name:'シクラメン',     emoji:'🌷', color:'#e050a0', sub:'#ffd0e8' },
+  { name:'ポインセチア',   emoji:'🌺', color:'#e02030', sub:'#ffc0c8' },
 ];
-
 function getFlower(mo) { return FLOWERS[mo-1]; }
 
-// ══════════════════════════════════════════════
-//  星座×干支 144通り ひとこと
-//  [zodiacIdx][etoIdx % 12]
-// ══════════════════════════════════════════════
-// 星座12 × 干支12 = 144通り
-// 星座名の略称で読みやすく記述
+// ── 星座×干支 144通り ─────────────────────────────────────────
 var COMBO_MSG = {
-  // やぎ×各干支
-  '0-0':'コツコツ努力するリアリスト🏆', '0-1':'責任感バツグンのしっかりもの💪',
-  '0-2':'野心と忍耐を兼ね備えた頑張り屋✨', '0-3':'可愛さと意志の強さを持つ人🌸',
-  '0-4':'地道な努力で夢を掴む人🌿', '0-5':'冷静に物事を分析する知恵者🧠',
-  '0-6':'温かさと堅実さを持つ頼れる人🤝', '0-7':'ゆっくりでも確実に前進するタイプ🌾',
-  '0-8':'ユーモアを忘れない努力家😊', '0-9':'まじめでありながら機転もきく人🌟',
-  '0-10':'愛情深くて誠実な人💕', '0-11':'直感と計画性を兼ね備えた冒険者🏹',
-  // みずがめ×各干支
-  '1-0':'独自の感性で世界を切り拓く自由人🌊', '1-1':'マイペースでもしっかり者な天才💡',
-  '1-2':'夢見がちな哲学者🌙', '1-3':'周りを笑顔にする個性派🌈',
-  '1-4':'おだやかで革新的なアイデアマン💐', '1-5':'好奇心旺盛で常識にとらわれない人🦋',
-  '1-6':'感受性豊かでユニークな人✨', '1-7':'自分のペースを大切にする芸術家🎨',
-  '1-8':'分析力と独創性を兼ね備えた人🔭', '1-9':'社交的でフェアな変わり者😄',
-  '1-10':'愛情深く個性的な自由な魂💜', '1-11':'冒険心と知性を持つロマンチスト🌠',
-  // うお×各干支
-  '2-0':'夢と現実の橋渡しができる人🌉', '2-1':'誠実でロマンチックな芸術家🎭',
-  '2-2':'深い共感力を持つ詩人のような人🌊', '2-3':'繊細でやさしい夢見る人🌸',
-  '2-4':'のんびりしながら奥深い感性の持ち主🌿', '2-5':'想像力豊かで遊び心のある人🦄',
-  '2-6':'直感と包容力にあふれる人🌙', '2-7':'マイペースで夢に向かって進む人💭',
-  '2-8':'繊細な心と鋭い観察眼を持つ人🔮', '2-9':'感性豊かでバランス感覚もある人⚖️',
-  '2-10':'情熱と慈悲心を兼ね備えた人❤️', '2-11':'自由に夢を追いかける冒険家✈️',
-  // おひつじ×各干支
-  '3-0':'行動力とリーダーシップが光る人🔥', '3-1':'一度決めたら曲げない強い意志の人💪',
-  '3-2':'大胆で夢いっぱいのチャレンジャー🌈', '3-3':'キュートな外見と負けん気の強さを持つ人🎀',
-  '3-4':'行動力とマイペースさを持つ突進力の人⚡', '3-5':'エネルギッシュで好奇心が止まらない人💫',
-  '3-6':'勇敢で感情豊かなアクティブ派🦸', '3-7':'のびのびと情熱を燃やす自由な人🌻',
-  '3-8':'素直でサバサバした行動派😎', '3-9':'公平さと行動力を兼ね備えた人🏅',
-  '3-10':'情熱と優しさで周りを引っ張る人💘', '3-11':'自由と冒険を愛する最強アクティブ人🏃',
-  // おうし×各干支
-  '4-0':'石橋を叩いて渡る堅実な愛情家💎', '4-1':'粘り強さと優しさを持つ癒し系🌼',
-  '4-2':'感受性豊かでこだわりのある芸術家🎨', '4-3':'かわいくて芯の強い人🌷',
-  '4-4':'のんびりしていても確実に前進する人🐢', '4-5':'知的好奇心と安定感を両立する人📚',
-  '4-6':'家族や友人を大切にする包容力の人🏡', '4-7':'ゆったりしたペースで人生を楽しむ達人🛋️',
-  '4-8':'笑いのセンスと穏やかさを持つ人😂', '4-9':'美的センスとバランス感覚に優れた人🌹',
-  '4-10':'深い愛情と揺るぎない信念を持つ人♥️', '4-11':'大地に根ざした自由な冒険者🌍',
-  // ふたご×各干支
-  '5-0':'機転の利く頭脳派で楽しい人🧩', '5-1':'おしゃべり上手でしっかり者の人📣',
-  '5-2':'言葉と夢でまわりを彩る人🌟', '5-3':'キュートなおしゃべり大好きな人💬',
-  '5-4':'多才でフレンドリーな人気者🌈', '5-5':'好奇心が爆発的な万能エンターテイナー🎪',
-  '5-6':'感情豊かで機転の利くコミュニケーター😄', '5-7':'自由にアイデアを語り合う旅人✈️',
-  '5-8':'ユーモアと知性を持つトリックスター🃏', '5-9':'公平なジャッジと軽やかさを持つ人⚡',
-  '5-10':'情熱と話術で場を盛り上げる人💃', '5-11':'冒険と知識を愛するキャラクターの持ち主🌏',
-  // かに×各干支
-  '6-0':'家族愛の深い温かい人🏠', '6-1':'誠実で包み込むような愛情の持ち主🌸',
-  '6-2':'夢と感情の豊かな共感上手な人🌊', '6-3':'優しさと可愛さで場を和ませる人🐰',
-  '6-4':'穏やかで愛情深い家庭的な人🌿', '6-5':'感受性豊かで楽しい人好きな人😊',
-  '6-6':'繊細で直感的な感情の使い手🌙', '6-7':'ゆっくりとみんなを包み込む癒し系人間☁️',
-  '6-8':'ユーモアで笑顔にする情深い人😂', '6-9':'感情と理性をバランスよく使う人💫',
-  '6-10':'深い愛情と情熱で人を惹きつける人❤️‍🔥', '6-11':'夢と家族を大切にする包容力の人🌠',
-  // しし×各干支
-  '7-0':'輝きと実力を兼ね備えたスター☀️', '7-1':'堂々としていて愛情深いリーダー👑',
-  '7-2':'感性と存在感で圧倒するアーティスト🎭', '7-3':'キュートなオーラで人を惹きつける人🌸',
-  '7-4':'どっしりとしたカリスマ性の持ち主🦁', '7-5':'明るさと好奇心でみんなを照らす人✨',
-  '7-6':'情熱と包容力で愛される太陽のような人🌞', '7-7':'自分のペースで輝き続ける存在🌟',
-  '7-8':'笑いと勇気でまわりを引っ張る人😆', '7-9':'公正で華のあるリーダータイプ⚖️',
-  '7-10':'炎のような情熱と大きな愛を持つ人🔥', '7-11':'冒険と栄光を求めるヒーロー🏆',
-  // おとめ×各干支
-  '8-0':'細かいところまで丁寧な完璧主義者📋', '8-1':'誠実で勤勉な努力家の鑑💡',
-  '8-2':'繊細な感性と分析力を持つ詩人🌿', '8-3':'かわいさの中に鋭い観察眼を持つ人🔍',
-  '8-4':'穏やかで確実にこなすプロフェッショナル🌾', '8-5':'知識欲と几帳面さを持つ天才肌の人🧪',
-  '8-6':'思いやりと分析力を持つ人🤝', '8-7':'丁寧に人生を積み上げるタイプ🧵',
-  '8-8':'ユーモアある完璧主義者😄', '8-9':'美的センスと正確さを持つ職人気質の人✂️',
-  '8-10':'情熱を持って丁寧に生きる人❤️', '8-11':'完璧を求めながらも自由な魂🌠',
-  // てんびん×各干支
-  '9-0':'バランスを大切にする外交上手な人⚖️', '9-1':'誠実で公平な判断力の持ち主🌹',
-  '9-2':'美しい感性とロマンのある人🎨', '9-3':'可愛くて公正な社交の達人🌸',
-  '9-4':'穏やかで平和を愛するおしゃれさん🌿', '9-5':'知的でフェアな人間関係の達人🤝',
-  '9-6':'感情豊かでエレガントな調停者💜', '9-7':'ゆったりと美しさを追求する人🌼',
-  '9-8':'笑いと公正さで愛されるムードメーカー😊', '9-9':'洗練された審美眼を持つ完璧な人⭐',
-  '9-10':'情熱と優雅さを兼ね備えた人💃', '9-11':'自由な感性でバランスを保つ人🦋',
-  // さそり×各干支
-  '10-0':'深くて強い意志を持つ神秘的な人🖤', '10-1':'情熱と根気を持つ真剣な愛の人💪',
-  '10-2':'ミステリアスな魅力と夢を持つ人🌊', '10-3':'可愛さの奥に熱い情熱を持つ人🌸',
-  '10-4':'深く粘り強い圧倒的な存在感を持つ人🌿', '10-5':'探究心と秘密めいた魅力の人🔮',
-  '10-6':'感情の深さで人を惹きつける人❤️‍🔥', '10-7':'マイペースで情熱的なミステリー担当🌙',
-  '10-8':'笑いとミステリーを使い分ける面白い人😏', '10-9':'情熱と冷静さを兼ね備えた人⚡',
-  '10-10':'強烈な愛情と情熱を持つ人🔥', '10-11':'自由を愛する深い魂の冒険者🌌',
-  // いて×各干支
-  '11-0':'夢を高く掲げる楽観的な旅人🌠', '11-1':'誠実で冒険心のある知恵者📖',
-  '11-2':'夢とロマンを持つ哲学者旅人🚀', '11-3':'可愛さと冒険心を持つ自由な人🌸',
-  '11-4':'のんびりしながら遠くを目指す人🐢', '11-5':'知識欲と旅心が止まらない人✈️',
-  '11-6':'感情豊かで遠くに夢見る人🌙', '11-7':'自由にゆっくり人生を歩む旅人🌈',
-  '11-8':'笑いと旅で人生を謳歌する人😆', '11-9':'公平な視野で世界を旅する人🌍',
-  '11-10':'情熱と自由を胸に旅する人❤️‍🔥', '11-11':'最高の冒険家！天性の自由人🏹',
+  '0-0':'コツコツ努力するリアリスト🏆','0-1':'責任感バツグンのしっかりもの💪','0-2':'野心と忍耐を兼ね備えた頑張り屋✨','0-3':'可愛さと意志の強さを持つ人🌸','0-4':'地道な努力で夢を掴む人🌿','0-5':'冷静に物事を分析する知恵者🧠','0-6':'温かさと堅実さを持つ頼れる人🤝','0-7':'ゆっくりでも確実に前進するタイプ🌾','0-8':'ユーモアを忘れない努力家😊','0-9':'まじめでありながら機転もきく人🌟','0-10':'愛情深くて誠実な人💕','0-11':'直感と計画性を兼ね備えた冒険者🏹',
+  '1-0':'独自の感性で世界を切り拓く自由人🌊','1-1':'マイペースでもしっかり者な天才💡','1-2':'夢見がちな哲学者🌙','1-3':'周りを笑顔にする個性派🌈','1-4':'おだやかで革新的なアイデアマン💐','1-5':'好奇心旺盛で常識にとらわれない人🦋','1-6':'感受性豊かでユニークな人✨','1-7':'自分のペースを大切にする芸術家🎨','1-8':'分析力と独創性を兼ね備えた人🔭','1-9':'社交的でフェアな変わり者😄','1-10':'愛情深く個性的な自由な魂💜','1-11':'冒険心と知性を持つロマンチスト🌠',
+  '2-0':'夢と現実の橋渡しができる人🌉','2-1':'誠実でロマンチックな芸術家🎭','2-2':'深い共感力を持つ詩人のような人🌊','2-3':'繊細でやさしい夢見る人🌸','2-4':'のんびりしながら奥深い感性の持ち主🌿','2-5':'想像力豊かで遊び心のある人🦄','2-6':'直感と包容力にあふれる人🌙','2-7':'マイペースで夢に向かって進む人💭','2-8':'繊細な心と鋭い観察眼を持つ人🔮','2-9':'感性豊かでバランス感覚もある人⚖️','2-10':'情熱と慈悲心を兼ね備えた人❤️','2-11':'自由に夢を追いかける冒険家✈️',
+  '3-0':'行動力とリーダーシップが光る人🔥','3-1':'一度決めたら曲げない強い意志の人💪','3-2':'大胆で夢いっぱいのチャレンジャー🌈','3-3':'キュートな外見と負けん気の強さを持つ人🎀','3-4':'行動力とマイペースさを持つ突進力の人⚡','3-5':'エネルギッシュで好奇心が止まらない人💫','3-6':'勇敢で感情豊かなアクティブ派🦸','3-7':'のびのびと情熱を燃やす自由な人🌻','3-8':'素直でサバサバした行動派😎','3-9':'公平さと行動力を兼ね備えた人🏅','3-10':'情熱と優しさで周りを引っ張る人💘','3-11':'自由と冒険を愛する最強アクティブ人🏃',
+  '4-0':'石橋を叩いて渡る堅実な愛情家💎','4-1':'粘り強さと優しさを持つ癒し系🌼','4-2':'感受性豊かでこだわりのある芸術家🎨','4-3':'かわいくて芯の強い人🌷','4-4':'のんびりしていても確実に前進する人🐢','4-5':'知的好奇心と安定感を両立する人📚','4-6':'家族や友人を大切にする包容力の人🏡','4-7':'ゆったりしたペースで人生を楽しむ達人🛋️','4-8':'笑いのセンスと穏やかさを持つ人😂','4-9':'美的センスとバランス感覚に優れた人🌹','4-10':'深い愛情と揺るぎない信念を持つ人♥️','4-11':'大地に根ざした自由な冒険者🌍',
+  '5-0':'機転の利く頭脳派で楽しい人🧩','5-1':'おしゃべり上手でしっかり者の人📣','5-2':'言葉と夢でまわりを彩る人🌟','5-3':'キュートなおしゃべり大好きな人💬','5-4':'多才でフレンドリーな人気者🌈','5-5':'好奇心が爆発的な万能エンターテイナー🎪','5-6':'感情豊かで機転の利くコミュニケーター😄','5-7':'自由にアイデアを語り合う旅人✈️','5-8':'ユーモアと知性を持つトリックスター🃏','5-9':'公平なジャッジと軽やかさを持つ人⚡','5-10':'情熱と話術で場を盛り上げる人💃','5-11':'冒険と知識を愛するキャラクターの持ち主🌏',
+  '6-0':'家族愛の深い温かい人🏠','6-1':'誠実で包み込むような愛情の持ち主🌸','6-2':'夢と感情の豊かな共感上手な人🌊','6-3':'優しさと可愛さで場を和ませる人🐰','6-4':'穏やかで愛情深い家庭的な人🌿','6-5':'感受性豊かで楽しい人好きな人😊','6-6':'繊細で直感的な感情の使い手🌙','6-7':'ゆっくりとみんなを包み込む癒し系人間☁️','6-8':'ユーモアで笑顔にする情深い人😂','6-9':'感情と理性をバランスよく使う人💫','6-10':'深い愛情と情熱で人を惹きつける人❤️‍🔥','6-11':'夢と家族を大切にする包容力の人🌠',
+  '7-0':'輝きと実力を兼ね備えたスター☀️','7-1':'堂々としていて愛情深いリーダー👑','7-2':'感性と存在感で圧倒するアーティスト🎭','7-3':'キュートなオーラで人を惹きつける人🌸','7-4':'どっしりとしたカリスマ性の持ち主🦁','7-5':'明るさと好奇心でみんなを照らす人✨','7-6':'情熱と包容力で愛される太陽のような人🌞','7-7':'自分のペースで輝き続ける存在🌟','7-8':'笑いと勇気でまわりを引っ張る人😆','7-9':'公正で華のあるリーダータイプ⚖️','7-10':'炎のような情熱と大きな愛を持つ人🔥','7-11':'冒険と栄光を求めるヒーロー🏆',
+  '8-0':'細かいところまで丁寧な完璧主義者📋','8-1':'誠実で勤勉な努力家の鑑💡','8-2':'繊細な感性と分析力を持つ詩人🌿','8-3':'かわいさの中に鋭い観察眼を持つ人🔍','8-4':'穏やかで確実にこなすプロフェッショナル🌾','8-5':'知識欲と几帳面さを持つ天才肌の人🧪','8-6':'思いやりと分析力を持つ人🤝','8-7':'丁寧に人生を積み上げるタイプ🧵','8-8':'ユーモアある完璧主義者😄','8-9':'美的センスと正確さを持つ職人気質の人✂️','8-10':'情熱を持って丁寧に生きる人❤️','8-11':'完璧を求めながらも自由な魂🌠',
+  '9-0':'バランスを大切にする外交上手な人⚖️','9-1':'誠実で公平な判断力の持ち主🌹','9-2':'美しい感性とロマンのある人🎨','9-3':'可愛くて公正な社交の達人🌸','9-4':'穏やかで平和を愛するおしゃれさん🌿','9-5':'知的でフェアな人間関係の達人🤝','9-6':'感情豊かでエレガントな調停者💜','9-7':'ゆったりと美しさを追求する人🌼','9-8':'笑いと公正さで愛されるムードメーカー😊','9-9':'洗練された審美眼を持つ完璧な人⭐','9-10':'情熱と優雅さを兼ね備えた人💃','9-11':'自由な感性でバランスを保つ人🦋',
+  '10-0':'深くて強い意志を持つ神秘的な人🖤','10-1':'情熱と根気を持つ真剣な愛の人💪','10-2':'ミステリアスな魅力と夢を持つ人🌊','10-3':'可愛さの奥に熱い情熱を持つ人🌸','10-4':'深く粘り強い圧倒的な存在感を持つ人🌿','10-5':'探究心と秘密めいた魅力の人🔮','10-6':'感情の深さで人を惹きつける人❤️‍🔥','10-7':'マイペースで情熱的なミステリー担当🌙','10-8':'笑いとミステリーを使い分ける面白い人😏','10-9':'情熱と冷静さを兼ね備えた人⚡','10-10':'強烈な愛情と情熱を持つ人🔥','10-11':'自由を愛する深い魂の冒険者🌌',
+  '11-0':'夢を高く掲げる楽観的な旅人🌠','11-1':'誠実で冒険心のある知恵者📖','11-2':'夢とロマンを持つ哲学者旅人🚀','11-3':'可愛さと冒険心を持つ自由な人🌸','11-4':'のんびりしながら遠くを目指す人🐢','11-5':'知識欲と旅心が止まらない人✈️','11-6':'感情豊かで遠くに夢見る人🌙','11-7':'自由にゆっくり人生を歩む旅人🌈','11-8':'笑いと旅で人生を謳歌する人😆','11-9':'公平な視野で世界を旅する人🌍','11-10':'情熱と自由を胸に旅する人❤️‍🔥','11-11':'最高の冒険家！天性の自由人🏹',
 };
+function getComboMsg(zIdx, eIdx) { return COMBO_MSG[zIdx+'-'+eIdx] || '個性あふれる最高の人✨'; }
 
-function getComboMsg(zIdx, eIdx) {
-  var key = zIdx + '-' + eIdx;
-  return COMBO_MSG[key] || '個性あふれる最高の人✨';
+// ── グラデーション合成 ────────────────────────────────────────
+function hex2rgba(hex, a) {
+  var r=parseInt(hex.slice(1,3),16), g=parseInt(hex.slice(3,5),16), b=parseInt(hex.slice(5,7),16);
+  return 'rgba('+r+','+g+','+b+','+a+')';
 }
-
-// ══════════════════════════════════════════════
-//  グラデーション合成
-// ══════════════════════════════════════════════
-function makeHeaderGrad(z, e, gem, fl) {
-  // 星座カラー + 干支 + 宝石 + 花 を4色グラデーション
+function makeHeaderGrad(z, e, gem, fl, blood) {
+  // 血液型カラーをアクセントに加える
+  var bColor = blood ? BLOOD_THEME[blood].light : fl.sub;
   return 'linear-gradient(135deg, ' +
-    z.grad[0] + ' 0%, ' +
-    gem.light  + ' 28%, ' +
-    e.c        + ' 58%, ' +
-    fl.sub     + ' 85%, ' +
-    z.grad[3]  + ' 100%)';
+    z.grad[0] + ' 0%, ' + gem.light + ' 25%, ' +
+    e.c + ' 52%, ' + bColor + ' 75%, ' + fl.sub + ' 100%)';
 }
-function makeBodyGrad(z, gem) {
-  return 'linear-gradient(160deg, ' +
-    'rgba(255,255,255,0.55) 0%, ' +
-    hex2rgba(gem.light, 0.25) + ' 50%, ' +
-    hex2rgba(z.grad[3], 0.3) + ' 100%)';
+function makeBodyGrad(z, gem, blood) {
+  var bLight = blood ? BLOOD_THEME[blood].light : gem.light;
+  return 'linear-gradient(160deg, #fff 0%, ' +
+    hex2rgba(bLight, 0.18) + ' 50%, ' +
+    hex2rgba(z.grad[3], 0.22) + ' 100%)';
 }
 function makeBgGrad(z, e, gem, fl) {
   return 'linear-gradient(135deg, ' +
@@ -806,38 +747,24 @@ function makeBgGrad(z, e, gem, fl) {
     hex2rgba(fl.sub, 0.9)     + ' 100%)';
 }
 
-function hex2rgba(hex, a) {
-  var r = parseInt(hex.slice(1,3),16);
-  var g = parseInt(hex.slice(3,5),16);
-  var b = parseInt(hex.slice(5,7),16);
-  return 'rgba('+r+','+g+','+b+','+a+')';
-}
-
-// ══════════════════════════════════════════════
-//  ボディ背景パターン絵文字
-// ══════════════════════════════════════════════
+// ── ボディパターン ────────────────────────────────────────────
 function buildBodyPattern(z, gem, fl) {
   var emojis = [fl.emoji, gem.emoji, z.emoji, '✨', '💕', fl.emoji, '⭐', gem.emoji];
   var pat = document.getElementById('body-pattern');
   pat.innerHTML = '';
-  for (var i = 0; i < 24; i++) {
-    pat.innerHTML += emojis[i % emojis.length] + ' ';
-  }
+  for (var i = 0; i < 24; i++) pat.innerHTML += emojis[i%emojis.length] + ' ';
 }
 
-// ══════════════════════════════════════════════
-//  ヘッダーHTML構築
-// ══════════════════════════════════════════════
-function buildHeader(name, z, e, gem, fl, comboMsg, month, day) {
+// ── ヘッダー構築 ──────────────────────────────────────────────
+function buildHeader(name, z, e, gem, fl, combo, blood) {
   var hdr = document.getElementById('out-header');
-  hdr.style.background = makeHeaderGrad(z, e, gem, fl);
-
+  hdr.style.background = makeHeaderGrad(z, e, gem, fl, blood);
   hdr.innerHTML = [
-    '<div class="hdr-symbol-big" id="hdr-sym-big">'+z.sym+'</div>',
-    '<div class="hdr-symbol-small" id="hdr-sym-small">'+e.emoji+'</div>',
-    // 宝石・花のフローティング装飾
-    '<div class="hdr-gem-deco" style="top:14px;right:68px;animation-delay:0.5s;">'+fl.emoji+'</div>',
-    '<div class="hdr-gem-deco" style="top:10px;right:28px;font-size:22px;animation-delay:1.2s;">'+gem.emoji+'</div>',
+    '<div class="hdr-symbol-big">'+z.sym+'</div>',
+    '<div class="hdr-symbol-small">'+e.emoji+'</div>',
+    blood ? '<div class="blood-badge-big"><div class="blood-type-text">'+blood+'</div><div class="blood-label">型</div></div>' : '',
+    '<div class="hdr-gem-deco" style="top:14px;right:'+(blood?'78':'18')+'px;animation-delay:0.5s;">'+fl.emoji+'</div>',
+    '<div class="hdr-gem-deco" style="top:10px;right:'+(blood?'118':'58')+'px;font-size:22px;animation-delay:1.2s;">'+gem.emoji+'</div>',
     '<div class="hdr-gem-deco" style="bottom:28px;right:110px;font-size:18px;animation-delay:0.8s;">'+z.emoji+'</div>',
     '<div class="hdr-ticker">💕 ★ 💕 ★ 💕 ★ 💕 ★ 💕 ★ 💕</div>',
     '<div class="output-title">'+name+' の プロフ 💖</div>',
@@ -845,15 +772,15 @@ function buildHeader(name, z, e, gem, fl, comboMsg, month, day) {
     '<div class="hdr-ticker-bot">💕 ★ 💕 ★ 💕 ★ 💕 ★ 💕 ★ 💕</div>',
   ].join('');
 
-  // バッジ挿入
-  var row = hdr.querySelector('#zodiac-row');
   var badges = [
-    z.emoji+'  '+z.name+'  '+z.sym,
-    e.emoji+'  '+e.name,
-    gem.emoji+'  '+gem.name,
-    fl.emoji+'  '+fl.name,
-    comboMsg,
+    z.emoji + '  ' + z.name + '  ' + z.sym,
+    e.emoji + '  ' + e.name,
+    gem.emoji + '  ' + gem.name,
+    fl.emoji + '  ' + fl.name,
+    combo,
   ];
+  if (blood) badges.splice(2, 0, BLOOD_THEME[blood].emoji + '  ' + blood + '型');
+  var row = hdr.querySelector('#zodiac-row');
   badges.forEach(function(txt, i) {
     var b = document.createElement('div');
     b.className = 'zodiac-badge' + (i >= 2 ? ' gem-badge' : '');
@@ -862,11 +789,8 @@ function buildHeader(name, z, e, gem, fl, comboMsg, month, day) {
   });
 }
 
-// ══════════════════════════════════════════════
-//  メイン生成関数
-// ══════════════════════════════════════════════
+// ── メイン生成関数 ────────────────────────────────────────────
 function v(id) { return document.getElementById(id).value.trim(); }
-function setText(id, val, fb) { document.getElementById(id).textContent = val || fb; }
 
 function generate() {
   var name = v('f-name');
@@ -878,62 +802,56 @@ function generate() {
 
   if (hasBday) {
     if (isNaN(year)||year<1900||year>2030) { alert('西暦を4桁で入力してね（例：2002）'); return; }
-    if (isNaN(month)||month<1||month>12)   { alert('月を正しく入力してね（1〜12）');     return; }
-    if (isNaN(day)||day<1||day>31)         { alert('日を正しく入力してね（1〜31）');     return; }
+    if (isNaN(month)||month<1||month>12)   { alert('月を正しく入力してね（1〜12）'); return; }
+    if (isNaN(day)||day<1||day>31)         { alert('日を正しく入力してね（1〜31）'); return; }
   }
 
   var card = document.getElementById('output-card');
+  var blood = selectedBlood || null;
 
   if (hasBday) {
-    var z   = getZodiac(month, day);
-    var e   = getEto(year);
+    var z = getZodiac(month, day);
+    var e = getEto(year);
     var gem = getGem(month);
     var fl  = getFlower(month);
     var zIdx = ZODIAC.indexOf(z);
     var eIdx = ETO.indexOf(e);
     var combo = getComboMsg(zIdx, eIdx);
 
-    // 背景グラデーションを更新
     document.body.style.background = makeBgGrad(z, e, gem, fl);
-    document.body.style.backgroundAttachment = 'fixed';
-
-    // 背景シンボル
     document.getElementById('bg-sym-main').textContent = z.sym;
     document.getElementById('bg-sym-sub').textContent  = e.emoji;
 
-    buildHeader(name, z, e, gem, fl, combo, month, day);
+    buildHeader(name, z, e, gem, fl, combo, blood);
 
-    // ボディ背景
-    document.getElementById('out-body').style.background = makeBodyGrad(z, gem);
+    document.getElementById('out-body').style.background = makeBodyGrad(z, gem, blood);
     buildBodyPattern(z, gem, fl);
 
-    // メッセージボックス背景
+    // メッセージボックス
+    var bLight = blood ? BLOOD_THEME[blood].light : gem.light;
     document.getElementById('out-msgbox').style.background =
-      'linear-gradient(135deg, ' + hex2rgba(fl.sub, 0.5) + ', ' + hex2rgba(gem.light, 0.5) + ')';
-    document.getElementById('out-msgbox').style.borderColor =
-      hex2rgba(gem.color, 0.35);
+      'linear-gradient(135deg, ' + hex2rgba(fl.sub,0.45) + ', ' + hex2rgba(bLight,0.45) + ')';
+    document.getElementById('out-msgbox').style.borderColor = hex2rgba(gem.color, 0.3);
 
-    // カード枠・影
     card.style.borderColor = hex2rgba(z.grad[0], 0.7);
     card.style.boxShadow = '0 12px 40px ' + hex2rgba(z.grad[2], 0.3) + ', 0 4px 16px ' + hex2rgba(gem.color, 0.2);
 
-    // フッター
     var footer = document.getElementById('out-footer');
     footer.style.background = 'linear-gradient(135deg,' + hex2rgba(z.grad[0],0.9) + ',' + hex2rgba(fl.sub,0.9) + ')';
     footer.style.color = 'white';
-    footer.textContent = fl.emoji + ' ' + gem.emoji + ' ' + z.emoji + ' ' + e.emoji + ' ' + z.sym + ' 💖 ' + z.sym + ' ' + e.emoji + ' ' + z.emoji + ' ' + gem.emoji + ' ' + fl.emoji;
+    footer.textContent = fl.emoji+' '+gem.emoji+' '+z.emoji+' '+e.emoji+' '+z.sym+' 💖 '+z.sym+' '+e.emoji+' '+z.emoji+' '+gem.emoji+' '+fl.emoji;
 
   } else {
-    // 誕生日未入力のデフォルト
     document.body.style.background = 'linear-gradient(135deg,#ffb6d9,#dda0f8,#a0c8ff,#ffd6a0)';
-    document.body.style.backgroundAttachment = 'fixed';
-    document.getElementById('out-header').innerHTML = [
+    var hdr = document.getElementById('out-header');
+    hdr.innerHTML = [
+      blood ? '<div class="blood-badge-big"><div class="blood-type-text">'+blood+'</div><div class="blood-label">型</div></div>' : '',
       '<div class="hdr-ticker">💕 ★ 💕 ★ 💕 ★ 💕 ★ 💕 ★ 💕</div>',
       '<div class="output-title">'+name+' の プロフ 💖</div>',
       '<div class="hdr-ticker-bot">💕 ★ 💕 ★ 💕 ★ 💕 ★ 💕 ★ 💕</div>',
     ].join('');
-    document.getElementById('out-header').style.background = 'linear-gradient(135deg,#f48fb1,#ce93d8,#90caf9)';
-    document.getElementById('out-body').style.background = 'rgba(255,255,255,0.52)';
+    hdr.style.background = 'linear-gradient(135deg,#f48fb1,#ce93d8,#90caf9)';
+    document.getElementById('out-body').style.background = '#fff';
     card.style.borderColor = 'rgba(255,180,210,0.7)';
     card.style.boxShadow = '0 12px 40px rgba(200,80,160,0.2)';
     var fp = document.getElementById('out-footer');
@@ -943,12 +861,27 @@ function generate() {
     document.getElementById('body-pattern').innerHTML = '🌸 💕 ⭐ 🌷 ✨ 💖 🌸 💕 ⭐ 🌷 ✨ 💖 🌸 💕 ⭐ 🌷 ✨ 💖 🌸 💕 ⭐ 🌷 ✨ 💖 ';
   }
 
-  // 名前・誕生日（西暦なし）
-  setText('out-name', name, 'ひみつ');
+  // 名前・誕生日
+  document.getElementById('out-name').textContent = name;
   document.getElementById('out-bday').textContent =
     hasBday ? '🎂 ' + month + '月' + day + '日 生まれ' : '';
 
-  // グリッドをJSで構築
+  // 血液型バッジ（ボディ内）
+  var metaRow = document.getElementById('out-meta-row');
+  var existingBlood = metaRow.querySelector('.out-blood-badge');
+  if (existingBlood) existingBlood.remove();
+  if (blood) {
+    var bt = BLOOD_THEME[blood];
+    var bb = document.createElement('div');
+    bb.className = 'out-blood-badge';
+    bb.style.background = hex2rgba(bt.light, 0.7);
+    bb.style.borderColor = hex2rgba(bt.color, 0.5);
+    bb.style.color = bt.color;
+    bb.textContent = bt.emoji + ' ' + blood + '型・' + bt.label;
+    metaRow.appendChild(bb);
+  }
+
+  // グリッド
   var fields = [
     { key:'🎨 好きな色',    val: v('f-color'),     full: false },
     { key:'🍓 好きな食べ物', val: v('f-food'),      full: false },
@@ -963,88 +896,111 @@ function generate() {
   fields.forEach(function(f) {
     var item = document.createElement('div');
     item.className = 'out-item' + (f.full ? ' full' : '');
-    var key = document.createElement('div');
-    key.className = 'out-key';
-    key.textContent = f.key;
-    var val = document.createElement('div');
-    val.className = 'out-val';
-    val.textContent = f.val || '—';
-    item.appendChild(key);
-    item.appendChild(val);
+    var key = document.createElement('div'); key.className = 'out-key'; key.textContent = f.key;
+    var val = document.createElement('div'); val.className = 'out-val'; val.textContent = f.val || '—';
+    item.appendChild(key); item.appendChild(val);
     grid.appendChild(item);
   });
 
-  // メッセージ
   document.getElementById('out-msg').textContent = v('f-msg') || 'よろしくね♪';
   document.getElementById('out-msgbox').style.display = 'block';
 
-  // Xポスト用データを保存
+  // Xポスト用データ
   window._postData = {
-    name: name,
-    bday: hasBday ? (month + '月' + day + '日') : null,
-    zodiac: hasBday ? getZodiac(month, day) : null,
+    name: name, blood: blood,
+    bday: hasBday ? (month+'月'+day+'日') : null,
+    zodiac: hasBday ? getZodiac(month,day) : null,
     eto:    hasBday ? getEto(year) : null,
     gem:    hasBday ? getGem(month) : null,
     flower: hasBday ? getFlower(month) : null,
     combo:  hasBday ? getComboMsg(ZODIAC.indexOf(getZodiac(month,day)), ETO.indexOf(getEto(year))) : null,
   };
 
-  var sec = document.getElementById('output-section');
-  sec.style.display = 'block';
+  document.getElementById('output-section').style.display = 'block';
   setTimeout(function() {
-    sec.scrollIntoView({ behavior:'smooth', block:'start' });
+    document.getElementById('output-section').scrollIntoView({ behavior:'smooth', block:'start' });
   }, 60);
 }
 
-// ══════════════════════════════════════════════
-//  X（Twitter）ポスト
-// ══════════════════════════════════════════════
-function postToX() {
-  var d = window._postData;
-  if (!d) { alert('先にプロフ帳を作ってね♪'); return; }
+// ── トースト ──────────────────────────────────────────────────
+function showToast(msg) {
+  var t = document.getElementById('copy-toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(function() { t.classList.remove('show'); }, 3500);
+}
 
-  var lines = [];
-  lines.push('🌸 わたしのプロフ帳できたよ！');
-  lines.push('');
+// ── Xポスト ───────────────────────────────────────────────────
+var X_SVG = '<svg width="18" height="18" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.253 5.622 5.911-5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>';
+
+function resetTweetBtn() {
+  var btn = document.getElementById('btn-tweet');
+  btn.disabled = false;
+  btn.innerHTML = X_SVG + ' 𝕏 でポストする';
+}
+
+function openXWithText(text) {
+  window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent(text), '_blank', 'noopener,noreferrer');
+}
+
+function buildTweetText(d) {
+  var lines = ['🌸 わたしのプロフ帳できたよ！', ''];
   lines.push('👤 名前：' + d.name);
-
+  if (d.blood) lines.push(BLOOD_THEME[d.blood].emoji + ' 血液型：' + d.blood + '型');
   if (d.bday) {
     lines.push('🎂 誕生日：' + d.bday + ' 生まれ');
     lines.push(d.zodiac.emoji + ' 星座：' + d.zodiac.name + ' ' + d.zodiac.sym);
     lines.push(d.eto.emoji    + ' 干支：'  + d.eto.name);
     lines.push(d.gem.emoji    + ' 誕生石：' + d.gem.name);
     lines.push(d.flower.emoji + ' 誕生花：' + d.flower.name);
-    lines.push('');
-    lines.push('💬 ' + d.combo);
+    lines.push(''); lines.push('💬 ' + d.combo);
   }
-  // urlをここに追記
+  lines.push('');
   lines.push('https://ogurana17.github.io/My-Profile/');
-  lines.push(' #プロフ帳 #MyProfile');
-
-  var text = lines.join('');
-  var url = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(text);
-  window.open(url, '_blank', 'noopener,noreferrer');
+  return lines.join('\n');
 }
 
-// ══════════════════════════════════════════════
-//  画像保存
-// ══════════════════════════════════════════════
+function fallbackDownloadAndOpen(canvas, tweetText) {
+  var a = document.createElement('a');
+  a.download = 'my_profile.png'; a.href = canvas.toDataURL('image/png'); a.click();
+  showToast('📥 画像を保存しました！Xに添付してね 💖');
+  setTimeout(function() { openXWithText(tweetText); }, 800);
+}
+
+function postToX() {
+  var d = window._postData;
+  if (!d) { alert('先にプロフ帳を作ってね♪'); return; }
+
+  var btn = document.getElementById('btn-tweet');
+  btn.disabled = true;
+  btn.innerHTML = X_SVG + ' 画像を準備中…';
+
+  html2canvas(document.getElementById('output-card'), { scale:2, useCORS:true, backgroundColor:'#ffffff' })
+    .then(function(canvas) {
+      if (window.ClipboardItem && navigator.clipboard && navigator.clipboard.write) {
+        canvas.toBlob(function(blob) {
+          navigator.clipboard.write([new ClipboardItem({'image/png': blob})])
+            .then(function() {
+              resetTweetBtn();
+              showToast('📋 画像をコピーしました！Xに貼り付けてね 💖');
+              setTimeout(function() { openXWithText(buildTweetText(d)); }, 2000);
+            })
+            .catch(function() { resetTweetBtn(); fallbackDownloadAndOpen(canvas, buildTweetText(d)); });
+        }, 'image/png');
+      } else {
+        resetTweetBtn(); fallbackDownloadAndOpen(canvas, buildTweetText(d));
+      }
+    })
+    .catch(function() { resetTweetBtn(); openXWithText(buildTweetText(d)); });
+}
+
+// ── 画像保存 ──────────────────────────────────────────────────
 function downloadCard() {
-  var card = document.getElementById('output-card');
-  html2canvas(card, {
-    scale: 2, useCORS: true, backgroundColor: '#ffffff',
-    ignoreElements: function(el) {
-      return el.classList && el.classList.contains('body-pattern');
-    }
-  }).then(function(canvas) {
-    html2canvas(card, { scale:2, useCORS:true, backgroundColor:'#ffffff' })
-    .then(function(c2) {
+  html2canvas(document.getElementById('output-card'), { scale:2, useCORS:true, backgroundColor:'#ffffff' })
+    .then(function(canvas) {
       var a = document.createElement('a');
-      a.download = 'my_profile.png';
-      a.href = c2.toDataURL('image/png');
-      a.click();
+      a.download = 'my_profile.png'; a.href = canvas.toDataURL('image/png'); a.click();
     });
-  });
 }
 </script>
 </body>
