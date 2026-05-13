@@ -41,14 +41,6 @@
   font-display: swap;
   src: url('fonts/zen-maru-gothic-v19-latin-700.woff2') format('woff2');
 }
-@font-face {
-  font-family: 'NotoEmoji';
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-  src: url('fonts/noto-color-emoji-v39-emoji-regular.woff2') format('woff2');
-}
-
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
@@ -62,7 +54,7 @@ body {
   min-height: 100vh;
   background: linear-gradient(135deg, var(--bg1) 0%, var(--bg2) 30%, var(--bg3) 65%, var(--bg4) 100%);
   background-attachment: fixed;
-  font-family: 'MPLUS1c', 'NotoEmoji', sans-serif;
+  font-family: 'MPLUS1c', sans-serif;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -82,7 +74,7 @@ body {
   font-weight: 900;
   color: white;
   -webkit-text-stroke: 3px rgba(255,255,255,0.6);
-  animation: spin-slow 40s linear infinite;
+  animation: spin-slow 60s linear infinite;
   will-change: transform;
   z-index: 0;
 }
@@ -93,7 +85,7 @@ body {
   pointer-events: none;
   color: white;
   -webkit-text-stroke: 2px rgba(255,255,255,0.5);
-  animation: spin-slow 25s linear infinite reverse;
+  animation: spin-slow 45s linear infinite reverse;
   will-change: transform;
   z-index: 0;
 }
@@ -119,18 +111,6 @@ body {
   100% { transform: translateY(0px)   rotate(-6deg) scale(1);    }
 }
 
-/* キラキラパーティクル */
-.sparkle {
-  position: fixed;
-  pointer-events: none;
-  z-index: 0;
-  font-size: 14px;
-  opacity: 0;
-  animation: sparkle-pop 3s ease-in-out infinite;
-  will-change: transform, opacity;
-}
-@keyframes sparkle-pop {
-  0%,100% { opacity: 0;    transform: scale(0.5) rotate(0deg); }
   20%      { opacity: 0.7;  transform: scale(1.2) rotate(20deg); }
   50%      { opacity: 0.9;  transform: scale(1)   rotate(-10deg); }
   80%      { opacity: 0.4;  transform: scale(0.8) rotate(15deg); }
@@ -148,10 +128,7 @@ body {
     4px 4px 0 rgba(200,50,200,0.2),
     0 0 30px rgba(255,255,255,0.7);
   position: relative; z-index: 1;
-  animation: title-pulse 3s ease-in-out infinite;
 }
-@keyframes title-pulse {
-  0%,100% { text-shadow: 2px 2px 0 rgba(200,50,120,0.5), 4px 4px 0 rgba(200,50,200,0.2), 0 0 30px rgba(255,255,255,0.7); }
   50%      { text-shadow: 2px 2px 0 rgba(200,50,120,0.5), 4px 4px 0 rgba(200,50,200,0.2), 0 0 50px rgba(255,255,255,0.9), 0 0 80px rgba(255,180,220,0.4); }
 }
 .page-sub {
@@ -161,7 +138,6 @@ body {
   letter-spacing: 8px;
   margin-bottom: 28px;
   position: relative; z-index: 1;
-  animation: floaty 4s ease-in-out infinite;
 }
 
 /* ─── 入力カード（すりガラス復活） ─── */
@@ -197,13 +173,11 @@ body {
 
 .field-input {
   background: rgba(255,255,255,0.7);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
   border: 1.5px solid rgba(240,140,190,0.6);
   border-radius: 12px;
   padding: 10px 14px;
   font-size: 14px;
-  font-family: 'MPLUS1c', 'NotoEmoji', sans-serif;
+  font-family: 'MPLUS1c', sans-serif;
   color: #4a1030;
   outline: none;
   transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
@@ -227,10 +201,8 @@ textarea.field-input { resize: vertical; min-height: 78px; line-height: 1.6; }
   padding: 9px 4px;
   border: 1.5px solid rgba(240,140,190,0.6);
   border-radius: 12px;
-  background: rgba(255,255,255,0.7);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  font-family: 'MPLUS1c', 'NotoEmoji', sans-serif;
+  background: rgba(255,255,255,0.85);
+  font-family: 'MPLUS1c', sans-serif;
   font-size: 15px;
   font-weight: 800;
   color: #b05080;
@@ -254,13 +226,11 @@ textarea.field-input { resize: vertical; min-height: 78px; line-height: 1.6; }
 .bday-row { display: flex; align-items: center; gap: 5px; }
 .bday-inp {
   background: rgba(255,255,255,0.7);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
   border: 1.5px solid rgba(240,140,190,0.6);
   border-radius: 12px;
   padding: 10px 6px;
   font-size: 15px;
-  font-family: 'MPLUS1c', 'NotoEmoji', sans-serif;
+  font-family: 'MPLUS1c', sans-serif;
   color: #4a1030;
   outline: none;
   transition: border-color 0.2s, box-shadow 0.2s;
@@ -292,7 +262,7 @@ textarea.field-input { resize: vertical; min-height: 78px; line-height: 1.6; }
   margin-top: 22px; width: 100%; padding: 15px;
   background: linear-gradient(135deg, #f06292, #ce93d8, #80b4f8);
   color: white; border: none; border-radius: 50px;
-  font-family: 'MPLUS1c', 'NotoEmoji', sans-serif;
+  font-family: 'MPLUS1c', sans-serif;
   font-size: 16px; font-weight: 900; letter-spacing: 3px;
   cursor: pointer;
   transition: transform 0.15s, box-shadow 0.15s;
@@ -311,7 +281,7 @@ textarea.field-input { resize: vertical; min-height: 78px; line-height: 1.6; }
   border-radius: 24px;
   overflow: hidden;
   border: 2px solid rgba(255,255,255,0.6);
-  font-family: 'MPLUS1c', 'NotoEmoji', sans-serif;
+  font-family: 'MPLUS1c', sans-serif;
   box-shadow: 0 12px 40px rgba(180,60,140,0.25);
   position: relative;
 }
@@ -330,8 +300,6 @@ textarea.field-input { resize: vertical; min-height: 78px; line-height: 1.6; }
   width: 52px; height: 52px;
   border-radius: 50%;
   background: rgba(255,255,255,0.28);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
   border: 2px solid rgba(255,255,255,0.75);
   display: flex; flex-direction: column;
   align-items: center; justify-content: center;
@@ -369,7 +337,7 @@ textarea.field-input { resize: vertical; min-height: 78px; line-height: 1.6; }
   line-height: 1;
   color: transparent;
   -webkit-text-stroke: 1.5px rgba(255,255,255,0.35);
-  font-family: 'NotoEmoji', serif;
+  font-family: serif;
   pointer-events: none;
   user-select: none;
 }
@@ -404,8 +372,6 @@ textarea.field-input { resize: vertical; min-height: 78px; line-height: 1.6; }
 }
 .zodiac-badge {
   background: rgba(255,255,255,0.25);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
   border: 1px solid rgba(255,255,255,0.65);
   border-radius: 20px;
   padding: 5px 13px;
@@ -419,8 +385,6 @@ textarea.field-input { resize: vertical; min-height: 78px; line-height: 1.6; }
 }
 .zodiac-badge.gem-badge {
   background: rgba(255,255,255,0.35);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
   border-color: rgba(255,255,255,0.85);
   font-size: 13px;
 }
@@ -487,8 +451,6 @@ textarea.field-input { resize: vertical; min-height: 78px; line-height: 1.6; }
 }
 .out-item {
   background: rgba(255,255,255,0.75);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
   border: 1px solid rgba(240,160,200,0.5);
   border-radius: 14px;
   padding: 10px 12px;
@@ -506,8 +468,6 @@ textarea.field-input { resize: vertical; min-height: 78px; line-height: 1.6; }
   border-radius: 16px;
   padding: 14px 16px; margin-top: 4px;
   background: rgba(253,245,255,0.85);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
   position: relative; z-index: 1;
 }
 .out-message-label {
@@ -528,12 +488,10 @@ textarea.field-input { resize: vertical; min-height: 78px; line-height: 1.6; }
   display: block; margin: 20px auto 0; width: 100%;
   padding: 13px;
   background: rgba(255,255,255,0.55);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
   color: #b03070;
   border: 2px solid rgba(255,255,255,0.7);
   border-radius: 50px;
-  font-family: 'MPLUS1c', 'NotoEmoji', sans-serif;
+  font-family: 'MPLUS1c', sans-serif;
   font-size: 14px; font-weight: 800; letter-spacing: 2px;
   cursor: pointer; transition: all 0.15s;
   box-shadow: 0 4px 16px rgba(200,80,140,0.2);
@@ -545,7 +503,7 @@ textarea.field-input { resize: vertical; min-height: 78px; line-height: 1.6; }
   margin: 10px auto 0; width: 100%; padding: 13px;
   background: #111; color: #fff;
   border: none; border-radius: 50px;
-  font-family: 'MPLUS1c', 'NotoEmoji', sans-serif;
+  font-family: 'MPLUS1c', sans-serif;
   font-size: 14px; font-weight: 800; letter-spacing: 2px;
   cursor: pointer; transition: background 0.15s, transform 0.15s;
   box-shadow: 0 4px 16px rgba(0,0,0,0.2);
@@ -560,7 +518,7 @@ textarea.field-input { resize: vertical; min-height: 78px; line-height: 1.6; }
   transform: translateX(-50%) translateY(20px);
   background: rgba(20,20,20,0.92); color: white;
   padding: 12px 24px; border-radius: 50px;
-  font-family: 'MPLUS1c', 'NotoEmoji', sans-serif;
+  font-family: 'MPLUS1c', sans-serif;
   font-size: 13px; font-weight: 700; letter-spacing: 1px;
   opacity: 0; pointer-events: none;
   transition: opacity 0.3s, transform 0.3s;
@@ -589,8 +547,6 @@ textarea.field-input { resize: vertical; min-height: 78px; line-height: 1.6; }
   align-items: center;
   gap: 8px;
   background: rgba(255,255,255,0.2);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
   border: 1px solid rgba(255,255,255,0.45);
   border-radius: 50px;
   padding: 7px 20px;
@@ -623,31 +579,18 @@ textarea.field-input { resize: vertical; min-height: 78px; line-height: 1.6; }
 <div id="copy-toast" class="copy-toast"></div>
 
 <!-- 背景浮遊絵文字 -->
-<div class="float-bg" style="top:4%;left:3%;animation-delay:0s;font-size:22px;">🌸</div>
-<div class="float-bg" style="top:10%;right:4%;animation-delay:0.8s;font-size:18px;">💖</div>
-<div class="float-bg" style="top:18%;left:7%;animation-delay:1.6s;font-size:16px;">✨</div>
-<div class="float-bg" style="top:27%;right:2%;animation-delay:2.4s;font-size:20px;">🦋</div>
-<div class="float-bg" style="top:38%;left:2%;animation-delay:3.2s;font-size:22px;">🌟</div>
-<div class="float-bg" style="top:50%;right:5%;animation-delay:1.2s;font-size:17px;">🎀</div>
-<div class="float-bg" style="top:62%;left:4%;animation-delay:2s;font-size:20px;">🌷</div>
-<div class="float-bg" style="top:73%;right:3%;animation-delay:0.4s;font-size:16px;">⭐</div>
-<div class="float-bg" style="top:84%;left:5%;animation-delay:2.8s;font-size:18px;">💫</div>
-<div class="float-bg" style="top:93%;right:6%;animation-delay:1.8s;font-size:15px;">🩷</div>
-<!-- キラキラパーティクル -->
-<div class="sparkle" style="top:6%;left:12%;animation-delay:0s;">✦</div>
-<div class="sparkle" style="top:15%;right:12%;animation-delay:0.7s;">✧</div>
-<div class="sparkle" style="top:32%;left:15%;animation-delay:1.4s;">✦</div>
-<div class="sparkle" style="top:45%;right:10%;animation-delay:2.1s;">✧</div>
-<div class="sparkle" style="top:58%;left:9%;animation-delay:0.5s;">✦</div>
-<div class="sparkle" style="top:70%;right:14%;animation-delay:1.9s;">✧</div>
-<div class="sparkle" style="top:82%;left:13%;animation-delay:1.1s;">✦</div>
-<div class="sparkle" style="top:92%;right:9%;animation-delay:2.6s;">✧</div>
+<div class="float-bg" style="top:5%;left:3%;animation-delay:0s;font-size:22px;">🌸</div>
+<div class="float-bg" style="top:18%;right:4%;animation-delay:1s;font-size:18px;">💖</div>
+<div class="float-bg" style="top:38%;left:2%;animation-delay:2s;font-size:22px;">🌟</div>
+<div class="float-bg" style="top:55%;right:5%;animation-delay:0.5s;font-size:20px;">🌷</div>
+<div class="float-bg" style="top:72%;left:4%;animation-delay:1.5s;font-size:18px;">✨</div>
+<div class="float-bg" style="top:88%;right:4%;animation-delay:2.5s;font-size:17px;">💫</div>
 
 <div class="bg-symbol" id="bg-sym-main" style="top:5%;left:-2%;">♡</div>
 <div class="bg-symbol-2" id="bg-sym-sub" style="bottom:10%;right:5%;">★</div>
 
 <div class="page-title">✦ My Profile ✦</div>
-<div class="page-sub">💕 平成レトロ風なプロフ帳 💕</div>
+<div class="page-sub">💕 プロフ帳 💕</div>
 
 <div class="card">
   <div class="form-section">
@@ -1147,7 +1090,7 @@ function postToX() {
   btn.disabled = true;
   btn.innerHTML = X_SVG + ' 画像を準備中…';
 
-  html2canvas(document.getElementById('output-card'), { scale:2, useCORS:true, backgroundColor:'#ffffff' })
+  html2canvas(document.getElementById('output-card'), { scale:2, useCORS:true, backgroundColor:'#ffffff', ignoreElements: function(el){ return el.classList && el.classList.contains('body-pattern'); } })
     .then(function(canvas) {
       if (window.ClipboardItem && navigator.clipboard && navigator.clipboard.write) {
         canvas.toBlob(function(blob) {
@@ -1155,7 +1098,7 @@ function postToX() {
             .then(function() {
               resetTweetBtn();
               showToast('📋 画像をコピーしました！Xに貼り付けてね 💖');
-              setTimeout(function() { openXWithText(buildTweetText(d)); }, 2400);
+              setTimeout(function() { openXWithText(buildTweetText(d)); }, 600);
             })
             .catch(function() { resetTweetBtn(); fallbackDownloadAndOpen(canvas, buildTweetText(d)); });
         }, 'image/png');
@@ -1168,7 +1111,7 @@ function postToX() {
 
 // ── 画像保存 ──────────────────────────────────────────────────
 function downloadCard() {
-  html2canvas(document.getElementById('output-card'), { scale:2, useCORS:true, backgroundColor:'#ffffff' })
+  html2canvas(document.getElementById('output-card'), { scale:2, useCORS:true, backgroundColor:'#ffffff', ignoreElements: function(el){ return el.classList && el.classList.contains('body-pattern'); } })
     .then(function(canvas) {
       var a = document.createElement('a');
       a.download = 'my_profile.png'; a.href = canvas.toDataURL('image/png'); a.click();
