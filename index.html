@@ -1292,46 +1292,76 @@ function isIOS() {
 }
 
 // ── 画像保存（iOS対応） ──────────────────────────────────────
-// A5サイズ (300dpi): 1748×2480px
+// A5サイズ 300dpi: 1748×2480px
+// pixelRatio=3 なので CSS幅は 1748÷3 ≒ 583px → カードをこの幅でレンダリング
 var A5_W = 1748, A5_H = 2480;
+var A5_CSS_W = Math.round(A5_W / 3); // 583px
 
 function captureCard(callback) {
   var card = document.getElementById('output-card');
-  var opts = {
-    width: card.scrollWidth,
-    height: card.scrollHeight,
-    pixelRatio: 3,
-    backgroundColor: '#ffffff',
-    filter: function(node) {
-      return !(node.classList && node.classList.contains('body-pattern'));
-    }
-  };
+  var section = document.getElementById('output-section');
 
-  // iOS Safari/Chrome は foreignObject の初回レンダリングが不完全な場合があるため
-  // toPng を2回呼ぶことで安定させる（既知の workaround）
-  htmlToImage.toPng(card, opts)
-    .then(function() {
-      return htmlToImage.toPng(card, opts);
-    })
-    .then(function(dataUrl) {
-      var img = new Image();
-      img.onload = function() {
-        var canvas = document.createElement('canvas');
-        canvas.width = A5_W;
-        canvas.height = A5_H;
-        var ctx = canvas.getContext('2d');
-        ctx.fillStyle = '#ffffff';
-        ctx.fillRect(0, 0, A5_W, A5_H);
-        var sc = Math.min(A5_W / img.width, A5_H / img.height);
-        var w = img.width * sc, h = img.height * sc;
-        ctx.drawImage(img, (A5_W - w) / 2, (A5_H - h) / 2, w, h);
-        callback(canvas);
+  // ── キャプチャ用に一時的にA5幅へ拡張 ──
+  var prevCardStyle     = card.getAttribute('style') || '';
+  var prevSectionStyle  = section.getAttribute('style') || '';
+
+  card.style.width    = A5_CSS_W + 'px';
+  card.style.maxWidth = A5_CSS_W + 'px';
+  section.style.maxWidth = A5_CSS_W + 'px';
+
+  // レイアウト再計算を待つ
+  requestAnimationFrame(function() {
+    requestAnimationFrame(function() {
+
+      var captureH = card.scrollHeight;
+      var opts = {
+        width:  A5_CSS_W,
+        height: captureH,
+        pixelRatio: 3,
+        backgroundColor: '#ffffff',
+        filter: function(node) {
+          return !(node.classList && node.classList.contains('body-pattern'));
+        }
       };
-      img.src = dataUrl;
-    })
-    .catch(function(err) {
-      console.error('capture error:', err);
+
+      // iOS は初回レンダリングが不完全なため2回呼ぶ（既知 workaround）
+      htmlToImage.toPng(card, opts)
+        .then(function() { return htmlToImage.toPng(card, opts); })
+        .then(function(dataUrl) {
+
+          // ── スタイルを元に戻す ──
+          card.setAttribute('style', prevCardStyle);
+          section.setAttribute('style', prevSectionStyle);
+
+          // dataUrl は幅1748px・高さ可変の画像
+          // A5キャンバスに上詰め中央配置（縦が収まる場合はそのまま、超える場合は縮小）
+          var img = new Image();
+          img.onload = function() {
+            var canvas = document.createElement('canvas');
+            canvas.width  = A5_W;
+            canvas.height = A5_H;
+            var ctx = canvas.getContext('2d');
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, A5_W, A5_H);
+
+            var sc = Math.min(1, A5_H / img.height); // 縦がA5に収まらない場合だけ縮小
+            var dw = img.width  * sc;
+            var dh = img.height * sc;
+            var dx = (A5_W - dw) / 2;
+            var dy = 0; // 上詰め
+            ctx.drawImage(img, dx, dy, dw, dh);
+            callback(canvas);
+          };
+          img.src = dataUrl;
+        })
+        .catch(function(err) {
+          // エラー時もスタイルを戻す
+          card.setAttribute('style', prevCardStyle);
+          section.setAttribute('style', prevSectionStyle);
+          console.error('capture error:', err);
+        });
     });
+  });
 }
 
 function saveImage(canvas) {
