@@ -1233,7 +1233,24 @@ function resetTweetBtn() {
 }
 
 function openXWithText(text) {
-  window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent(text), '_blank', 'noopener,noreferrer');
+  var encoded = encodeURIComponent(text);
+  var appUrl = 'twitter://post?message=' + encoded;
+  var webUrl = 'https://twitter.com/intent/tweet?text=' + encoded;
+
+  if (/iPad|iPhone|iPod|Android/.test(navigator.userAgent)) {
+    // アプリ起動を試み、300ms後に未起動ならブラウザで開く
+    var fallbackTimer = setTimeout(function() {
+      window.open(webUrl, '_blank', 'noopener,noreferrer');
+    }, 300);
+    window.location.href = appUrl;
+    // アプリが開いてページが非アクティブになったらタイマーをキャンセル
+    window.addEventListener('blur', function onBlur() {
+      clearTimeout(fallbackTimer);
+      window.removeEventListener('blur', onBlur);
+    }, { once: true });
+  } else {
+    window.open(webUrl, '_blank', 'noopener,noreferrer');
+  }
 }
 
 function buildTweetText(d) {
@@ -1293,48 +1310,46 @@ function isIOS() {
 
 // ── 画像保存（iOS対応） ──────────────────────────────────────
 // A5サイズ 300dpi: 1748×2480px
-// pixelRatio=3 なので CSS幅は 1748÷3 ≒ 583px → カードをこの幅でレンダリング
+// pixelRatio=3 → CSS幅 1748÷3 ≒ 583px
 var A5_W = 1748, A5_H = 2480;
 var A5_CSS_W = Math.round(A5_W / 3); // 583px
 
 function captureCard(callback) {
   var card = document.getElementById('output-card');
-  var section = document.getElementById('output-section');
 
-  // ── キャプチャ用に一時的にA5幅へ拡張 ──
-  var prevCardStyle     = card.getAttribute('style') || '';
-  var prevSectionStyle  = section.getAttribute('style') || '';
+  // ── 元カードをクローンして画面外に配置（元レイアウトを一切変えない） ──
+  var clone = card.cloneNode(true);
 
-  card.style.width    = A5_CSS_W + 'px';
-  card.style.maxWidth = A5_CSS_W + 'px';
-  section.style.maxWidth = A5_CSS_W + 'px';
+  // 元のインラインスタイル（動的に設定したborderColor等）を引き継いだ上でA5幅を指定
+  var baseStyle = card.getAttribute('style') || '';
+  clone.style.cssText = baseStyle +
+    ';position:fixed;left:-9999px;top:0' +
+    ';width:' + A5_CSS_W + 'px' +
+    ';max-width:' + A5_CSS_W + 'px' +
+    ';border-radius:0;z-index:-1;pointer-events:none;visibility:hidden';
 
-  // レイアウト再計算を待つ
+  // body-pattern は除外（描画負荷軽減）
+  var bp = clone.querySelector('.body-pattern');
+  if (bp) bp.style.display = 'none';
+
+  document.body.appendChild(clone);
+
+  // レイアウト確定を2フレーム待つ
   requestAnimationFrame(function() {
     requestAnimationFrame(function() {
-
-      var captureH = card.scrollHeight;
       var opts = {
         width:  A5_CSS_W,
-        height: captureH,
+        height: clone.scrollHeight,
         pixelRatio: 3,
-        backgroundColor: '#ffffff',
-        filter: function(node) {
-          return !(node.classList && node.classList.contains('body-pattern'));
-        }
+        backgroundColor: '#ffffff'
       };
 
       // iOS は初回レンダリングが不完全なため2回呼ぶ（既知 workaround）
-      htmlToImage.toPng(card, opts)
-        .then(function() { return htmlToImage.toPng(card, opts); })
+      htmlToImage.toPng(clone, opts)
+        .then(function() { return htmlToImage.toPng(clone, opts); })
         .then(function(dataUrl) {
+          document.body.removeChild(clone);
 
-          // ── スタイルを元に戻す ──
-          card.setAttribute('style', prevCardStyle);
-          section.setAttribute('style', prevSectionStyle);
-
-          // dataUrl は幅1748px・高さ可変の画像
-          // A5キャンバスに上詰め中央配置（縦が収まる場合はそのまま、超える場合は縮小）
           var img = new Image();
           img.onload = function() {
             var canvas = document.createElement('canvas');
@@ -1343,21 +1358,16 @@ function captureCard(callback) {
             var ctx = canvas.getContext('2d');
             ctx.fillStyle = '#ffffff';
             ctx.fillRect(0, 0, A5_W, A5_H);
-
-            var sc = Math.min(1, A5_H / img.height); // 縦がA5に収まらない場合だけ縮小
-            var dw = img.width  * sc;
-            var dh = img.height * sc;
-            var dx = (A5_W - dw) / 2;
-            var dy = 0; // 上詰め
-            ctx.drawImage(img, dx, dy, dw, dh);
+            // 縦がA5を超える場合のみ縮小、それ以外は上詰め等倍
+            var sc = Math.min(1, A5_H / img.height);
+            var dw = img.width * sc, dh = img.height * sc;
+            ctx.drawImage(img, (A5_W - dw) / 2, 0, dw, dh);
             callback(canvas);
           };
           img.src = dataUrl;
         })
         .catch(function(err) {
-          // エラー時もスタイルを戻す
-          card.setAttribute('style', prevCardStyle);
-          section.setAttribute('style', prevSectionStyle);
+          if (document.body.contains(clone)) document.body.removeChild(clone);
           console.error('capture error:', err);
         });
     });
