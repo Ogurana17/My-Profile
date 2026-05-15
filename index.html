@@ -1255,8 +1255,7 @@ function buildTweetText(d) {
 }
 
 function fallbackDownloadAndOpen(canvas, tweetText) {
-  var a = document.createElement('a');
-  a.download = 'my_profile.png'; a.href = canvas.toDataURL('image/png'); a.click();
+  saveImage(canvas);
   showToast('📥 画像を保存しました！Xに添付してね 💖');
   setTimeout(function() { openXWithText(tweetText); }, 800);
 }
@@ -1286,14 +1285,19 @@ function postToX() {
   });
 }
 
-// ── 画像保存 ──────────────────────────────────────────────────
+// ── iOS判定 ──────────────────────────────────────────────────
+function isIOS() {
+  return /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+    (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+}
+
+// ── 画像保存（iOS対応） ──────────────────────────────────────
 // A5サイズ (300dpi): 1748×2480px
 var A5_W = 1748, A5_H = 2480;
 
 function captureCard(callback) {
   var card = document.getElementById('output-card');
-  // html-to-image はブラウザネイティブ描画のためcapture-mode不要
-  htmlToImage.toPng(card, {
+  var opts = {
     width: card.scrollWidth,
     height: card.scrollHeight,
     pixelRatio: 3,
@@ -1301,37 +1305,67 @@ function captureCard(callback) {
     filter: function(node) {
       return !(node.classList && node.classList.contains('body-pattern'));
     }
-  }).then(function(dataUrl) {
-    // A5リサイズ
-    var img = new Image();
-    img.onload = function() {
-      var canvas = document.createElement('canvas');
-      canvas.width = A5_W;
-      canvas.height = A5_H;
-      var ctx = canvas.getContext('2d');
-      ctx.fillStyle = '#ffffff';
-      ctx.fillRect(0, 0, A5_W, A5_H);
-      // アスペクト比を保ってA5に収める（上寄せ中央）
-      var scale = Math.min(A5_W / img.width, A5_H / img.height);
-      var w = img.width * scale;
-      var h = img.height * scale;
-      var x = (A5_W - w) / 2;
-      var y = (A5_H - h) / 2;
-      ctx.drawImage(img, x, y, w, h);
-      callback(canvas);
-    };
-    img.src = dataUrl;
-  }).catch(function(err) {
-    console.error('capture error:', err);
-  });
+  };
+
+  // iOS Safari/Chrome は foreignObject の初回レンダリングが不完全な場合があるため
+  // toPng を2回呼ぶことで安定させる（既知の workaround）
+  htmlToImage.toPng(card, opts)
+    .then(function() {
+      return htmlToImage.toPng(card, opts);
+    })
+    .then(function(dataUrl) {
+      var img = new Image();
+      img.onload = function() {
+        var canvas = document.createElement('canvas');
+        canvas.width = A5_W;
+        canvas.height = A5_H;
+        var ctx = canvas.getContext('2d');
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, A5_W, A5_H);
+        var sc = Math.min(A5_W / img.width, A5_H / img.height);
+        var w = img.width * sc, h = img.height * sc;
+        ctx.drawImage(img, (A5_W - w) / 2, (A5_H - h) / 2, w, h);
+        callback(canvas);
+      };
+      img.src = dataUrl;
+    })
+    .catch(function(err) {
+      console.error('capture error:', err);
+    });
 }
 
-function downloadCard() {
-  captureCard(function(canvas) {
+function saveImage(canvas) {
+  if (isIOS()) {
+    // iOS: a.download が効かないため、Blob URLを新しいタブで開いて長押し保存を促す
+    canvas.toBlob(function(blob) {
+      var url = URL.createObjectURL(blob);
+      var w = window.open(url, '_blank');
+      if (!w) {
+        // ポップアップブロック時はimg要素を表示
+        var img = document.createElement('img');
+        img.src = url;
+        img.style.cssText = 'max-width:100%;position:fixed;top:0;left:0;z-index:99999;background:#fff;padding:16px;';
+        var close = document.createElement('div');
+        close.textContent = '✕ 閉じる';
+        close.style.cssText = 'position:fixed;top:8px;right:12px;z-index:99999;background:#ff3dac;color:#fff;padding:8px 16px;border-radius:20px;font-weight:900;cursor:pointer;font-size:14px;';
+        close.onclick = function() { img.remove(); close.remove(); };
+        document.body.appendChild(img);
+        document.body.appendChild(close);
+      }
+      showToast('📱 画像を長押しして保存してね 💖');
+    }, 'image/png');
+  } else {
+    // PC/Android: a.download で通常ダウンロード
     var a = document.createElement('a');
     a.download = 'my_profile.png';
     a.href = canvas.toDataURL('image/png');
     a.click();
+  }
+}
+
+function downloadCard() {
+  captureCard(function(canvas) {
+    saveImage(canvas);
   });
 }
 </script>
