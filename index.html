@@ -1315,40 +1315,46 @@ var A5_W = 1748, A5_H = 2480;
 var A5_CSS_W = Math.round(A5_W / 3); // 583px
 
 function captureCard(callback) {
-  var card = document.getElementById('output-card');
+  var card    = document.getElementById('output-card');
+  var section = document.getElementById('output-section');
 
-  // ── 元カードをクローンして画面外に配置（元レイアウトを一切変えない） ──
-  var clone = card.cloneNode(true);
+  // ── キャプチャ前のインラインスタイルを完全にバックアップ ──
+  // card には generate() が動的に設定した border/shadow/background が入っている
+  // section は display:block のみなので style属性自体が存在しない場合がある
+  var savedCardStyle    = card.style.cssText;
+  var savedSectionStyle = section.style.cssText;
 
-  // 元のインラインスタイル（動的に設定したborderColor等）を引き継いだ上でA5幅を指定
-  var baseStyle = card.getAttribute('style') || '';
-  clone.style.cssText = baseStyle +
-    ';position:fixed;left:-9999px;top:0' +
-    ';width:' + A5_CSS_W + 'px' +
-    ';max-width:' + A5_CSS_W + 'px' +
-    ';border-radius:0;z-index:-1;pointer-events:none;visibility:hidden';
-
-  // body-pattern は除外（描画負荷軽減）
-  var bp = clone.querySelector('.body-pattern');
+  // A5 幅に一時拡張（body-pattern は非表示に）
+  var bp = card.querySelector('.body-pattern');
+  var savedBpDisplay = bp ? bp.style.display : '';
   if (bp) bp.style.display = 'none';
 
-  document.body.appendChild(clone);
+  card.style.width    = A5_CSS_W + 'px';
+  card.style.maxWidth = A5_CSS_W + 'px';
+  section.style.maxWidth = A5_CSS_W + 'px';
+  section.style.width    = A5_CSS_W + 'px';
 
-  // レイアウト確定を2フレーム待つ
+  // スタイル確定を2フレーム待つ
   requestAnimationFrame(function() {
     requestAnimationFrame(function() {
       var opts = {
         width:  A5_CSS_W,
-        height: clone.scrollHeight,
+        height: card.scrollHeight,
         pixelRatio: 3,
         backgroundColor: '#ffffff'
       };
 
-      // iOS は初回レンダリングが不完全なため2回呼ぶ（既知 workaround）
-      htmlToImage.toPng(clone, opts)
-        .then(function() { return htmlToImage.toPng(clone, opts); })
+      function restore() {
+        card.style.cssText    = savedCardStyle;
+        section.style.cssText = savedSectionStyle;
+        if (bp) bp.style.display = savedBpDisplay;
+      }
+
+      // iOS: 初回レンダリング不完全のため2回呼ぶ（既知 workaround）
+      htmlToImage.toPng(card, opts)
+        .then(function() { return htmlToImage.toPng(card, opts); })
         .then(function(dataUrl) {
-          document.body.removeChild(clone);
+          restore();
 
           var img = new Image();
           img.onload = function() {
@@ -1358,7 +1364,6 @@ function captureCard(callback) {
             var ctx = canvas.getContext('2d');
             ctx.fillStyle = '#ffffff';
             ctx.fillRect(0, 0, A5_W, A5_H);
-            // 縦がA5を超える場合のみ縮小、それ以外は上詰め等倍
             var sc = Math.min(1, A5_H / img.height);
             var dw = img.width * sc, dh = img.height * sc;
             ctx.drawImage(img, (A5_W - dw) / 2, 0, dw, dh);
@@ -1367,7 +1372,7 @@ function captureCard(callback) {
           img.src = dataUrl;
         })
         .catch(function(err) {
-          if (document.body.contains(clone)) document.body.removeChild(clone);
+          restore();
           console.error('capture error:', err);
         });
     });
