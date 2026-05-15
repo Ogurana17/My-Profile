@@ -102,10 +102,7 @@ body {
   font-family: serif;
   font-weight: 900;
   color: transparent;
-  -webkit-text-stroke: 3px rgba(255,61,172,0.7);
-  text-shadow:
-    0 0 20px rgba(255,61,172,0.5),
-    0 0 50px rgba(197,61,255,0.35);
+  -webkit-text-stroke: 3px rgba(255,61,172,0.6);
   animation: spin-slow 60s linear infinite;
   will-change: transform;
   z-index: 0;
@@ -116,10 +113,7 @@ body {
   opacity: 0.14;
   pointer-events: none;
   color: transparent;
-  -webkit-text-stroke: 2px rgba(61,200,255,0.7);
-  text-shadow:
-    0 0 16px rgba(61,200,255,0.5),
-    0 0 40px rgba(197,61,255,0.35);
+  -webkit-text-stroke: 2px rgba(61,200,255,0.6);
   animation: spin-slow 45s linear infinite reverse;
   will-change: transform;
   z-index: 0;
@@ -133,21 +127,16 @@ body {
 .float-bg {
   position: fixed;
   pointer-events: none;
-  animation: floaty 6s ease-in-out infinite;
+  animation: floaty 8s ease-in-out infinite;
   will-change: transform;
   z-index: 0;
-  font-size: 80px;
-  opacity: 0.6;
-  filter:
-    drop-shadow(0 0 8px rgba(255,61,172,0.9))
-    drop-shadow(0 0 18px rgba(197,61,255,0.7))
-    drop-shadow(0 0 32px rgba(61,200,255,0.5));
+  font-size: 140px;
+  opacity: 0.5;
+  filter: drop-shadow(0 0 16px rgba(255,61,172,0.7));
 }
 @keyframes floaty {
-  0%   { transform: translateY(0px)   rotate(-6deg) scale(1);    }
-  33%  { transform: translateY(-14px) rotate(3deg)  scale(1.06); }
-  66%  { transform: translateY(-8px)  rotate(-3deg) scale(0.97); }
-  100% { transform: translateY(0px)   rotate(-6deg) scale(1);    }
+  0%,100% { transform: translateY(0px) rotate(-4deg); }
+  50%     { transform: translateY(-18px) rotate(4deg); }
 }
 
 /* SVGデコ要素（クローバー・音符・羽） */
@@ -157,14 +146,11 @@ body {
   z-index: 0;
   animation: deco-float 7s ease-in-out infinite;
   will-change: transform;
-  filter:
-    drop-shadow(0 0 6px rgba(255,61,172,0.8))
-    drop-shadow(0 0 14px rgba(197,61,255,0.6))
-    drop-shadow(0 0 28px rgba(61,200,255,0.4));
+  filter: drop-shadow(0 0 10px rgba(255,61,172,0.7));
 }
 @keyframes deco-float {
-  0%,100% { transform: translateY(0) rotate(-5deg); }
-  50%      { transform: translateY(-12px) rotate(5deg); }
+  0%,100% { transform: translateY(0) rotate(-4deg); }
+  50%      { transform: translateY(-10px) rotate(4deg); }
 }
 
 /* ── ページタイトル ── */
@@ -223,8 +209,8 @@ body {
     rgba(61,200,255,0.25) 60%,
     rgba(61,255,180,0.2) 100%);
   z-index: -1;
-  filter: blur(6px);
-  animation: border-glow 4s ease-in-out infinite;
+  filter: blur(4px);
+  animation: border-glow 5s ease-in-out infinite;
 }
 @keyframes border-glow {
   0%,100% { opacity: 0.7; }
@@ -247,7 +233,6 @@ body {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  filter: drop-shadow(0 0 4px rgba(255,61,172,0.4));
 }
 
 .field-input {
@@ -328,7 +313,6 @@ textarea.field-input { resize: vertical; min-height: 78px; line-height: 1.8; }
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  filter: drop-shadow(0 0 4px rgba(197,61,255,0.4));
 }
 .divider::before, .divider::after {
   content: ''; flex: 1; height: 2px;
@@ -393,8 +377,8 @@ textarea.field-input { resize: vertical; min-height: 78px; line-height: 1.8; }
     rgba(61,200,255,0.3) 65%,
     rgba(61,255,180,0.25) 100%);
   z-index: -1;
-  filter: blur(8px);
-  animation: border-glow 4s ease-in-out infinite;
+  filter: blur(4px);
+  animation: border-glow 5s ease-in-out infinite;
 }
 
 .output-header {
@@ -425,16 +409,13 @@ textarea.field-input { resize: vertical; min-height: 78px; line-height: 1.8; }
   z-index: 3;
   pointer-events: none;
   animation: gem-float 5s ease-in-out infinite;
-  filter:
-    drop-shadow(0 0 12px rgba(255,255,255,0.8))
-    drop-shadow(0 0 24px rgba(255,200,240,0.6))
-    drop-shadow(0 0 40px rgba(197,61,255,0.4));
+  filter: drop-shadow(0 0 16px rgba(255,200,240,0.7));
 }
 .hdr-gem-deco {
   position: absolute; font-size: 28px; pointer-events: none;
   animation: gem-float 4s ease-in-out infinite;
   will-change: transform;
-  filter: drop-shadow(0 0 10px rgba(255,255,255,0.7)) drop-shadow(0 0 20px rgba(255,200,240,0.5));
+  filter: drop-shadow(0 0 14px rgba(255,200,240,0.6));
 }
 @keyframes gem-float {
   0%   { transform: translateY(0px)   rotate(-10deg) scale(1); }
@@ -526,7 +507,6 @@ textarea.field-input { resize: vertical; min-height: 78px; line-height: 1.8; }
   background: linear-gradient(90deg,#ff3dac,#c53dff);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent;
   background-clip: text;
-  filter: drop-shadow(0 0 4px rgba(255,61,172,0.4));
 }
 
 .out-meta-row {
@@ -566,7 +546,6 @@ textarea.field-input { resize: vertical; min-height: 78px; line-height: 1.8; }
   background: linear-gradient(90deg, #3dc8ff, #3dffb4);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent;
   background-clip: text;
-  filter: drop-shadow(0 0 3px rgba(61,200,255,0.4));
 }
 .out-item:nth-child(2n) .out-val { color: #0060a0; }
 .out-item:nth-child(3n)::before {
@@ -577,7 +556,6 @@ textarea.field-input { resize: vertical; min-height: 78px; line-height: 1.8; }
   background: linear-gradient(90deg, #f0a000, #ff3dac);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent;
   background-clip: text;
-  filter: drop-shadow(0 0 3px rgba(255,160,0,0.4));
 }
 .out-item:nth-child(3n) .out-val { color: #a05000; }
 .out-item.full { grid-column: 1 / -1; }
@@ -615,7 +593,6 @@ textarea.field-input { resize: vertical; min-height: 78px; line-height: 1.8; }
   background: linear-gradient(90deg, #c53dff, #3dc8ff);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent;
   background-clip: text;
-  filter: drop-shadow(0 0 4px rgba(197,61,255,0.4));
 }
 .out-message-text {
   font-size: 13px; color: #8000c0; line-height: 1.8;
@@ -722,101 +699,19 @@ textarea.field-input { resize: vertical; min-height: 78px; line-height: 1.8; }
   to   { opacity: 1;   transform: scale(1.15) rotate(8deg); }
 }
 
-/* html2canvas キャプチャ用：グラデーション文字をsolid colorにフォールバック */
-.capture-mode .out-name {
-  background: none !important;
-  -webkit-background-clip: unset !important;
-  -webkit-text-fill-color: #a01860 !important;
-  background-clip: unset !important;
-  animation: none !important;
-  color: #a01860 !important;
-}
-.capture-mode .out-key {
-  background: none !important;
-  -webkit-background-clip: unset !important;
-  -webkit-text-fill-color: #c53dff !important;
-  background-clip: unset !important;
-  filter: none !important;
-  color: #c53dff !important;
-}
-.capture-mode .out-item:nth-child(2n) .out-key {
-  -webkit-text-fill-color: #3dc8ff !important;
-  color: #3dc8ff !important;
-}
-.capture-mode .out-item:nth-child(3n) .out-key {
-  -webkit-text-fill-color: #e08000 !important;
-  color: #e08000 !important;
-}
-.capture-mode .out-item:nth-child(2n) .out-val {
-  color: #0060a0 !important;
-}
-.capture-mode .out-item:nth-child(3n) .out-val {
-  color: #a05000 !important;
-}
-.capture-mode .out-bday {
-  background: none !important;
-  -webkit-background-clip: unset !important;
-  -webkit-text-fill-color: #c040a0 !important;
-  background-clip: unset !important;
-  filter: none !important;
-  color: #c040a0 !important;
-}
-.capture-mode .out-message-label {
-  background: none !important;
-  -webkit-background-clip: unset !important;
-  -webkit-text-fill-color: #c53dff !important;
-  background-clip: unset !important;
-  filter: none !important;
-  color: #c53dff !important;
-}
-.capture-mode .output-card::before {
-  display: none !important;
-}
-.capture-mode .output-body {
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
-  background: #fff8ff !important;
-}
-.capture-mode .out-item {
-  background: #ffffff !important;
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
-}
-.capture-mode .out-message-box {
-  background: #fef5ff !important;
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
-}
-.capture-mode .output-header {
-  overflow: hidden;
-}
-.capture-mode .zodiac-badge {
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
-}
 </style>
 </head>
 <body>
 
 <div id="copy-toast" class="copy-toast"></div>
 
-<!-- 背景浮遊絵文字（大きく・密に） -->
-<div class="float-bg" style="top:2%;left:2%;animation-delay:0s;">🌸</div>
-<div class="float-bg" style="top:2%;left:30%;animation-delay:0.6s;">💖</div>
-<div class="float-bg" style="top:2%;right:3%;animation-delay:1.2s;">✨</div>
-<div class="float-bg" style="top:14%;left:12%;animation-delay:1.8s;">🌟</div>
-<div class="float-bg" style="top:14%;right:12%;animation-delay:0.4s;">🦋</div>
-<div class="float-bg" style="top:26%;left:0%;animation-delay:2.4s;">🌷</div>
-<div class="float-bg" style="top:26%;right:2%;animation-delay:1s;">💫</div>
-<div class="float-bg" style="top:38%;left:20%;animation-delay:0.2s;">🎀</div>
-<div class="float-bg" style="top:50%;left:1%;animation-delay:2s;">🌸</div>
-<div class="float-bg" style="top:50%;right:1%;animation-delay:1.4s;">💖</div>
-<div class="float-bg" style="top:62%;left:14%;animation-delay:0.8s;">⭐</div>
-<div class="float-bg" style="top:62%;right:14%;animation-delay:2.2s;">🌷</div>
-<div class="float-bg" style="top:74%;left:2%;animation-delay:1.6s;">✨</div>
-<div class="float-bg" style="top:74%;right:3%;animation-delay:0.3s;">🌟</div>
-<div class="float-bg" style="top:86%;left:22%;animation-delay:2.8s;">💫</div>
-<div class="float-bg" style="top:86%;right:20%;animation-delay:0.9s;">🦋</div>
+<!-- 背景浮遊絵文字（大きく・少なく） -->
+<div class="float-bg" style="top:3%;left:1%;animation-delay:0s;">🌸</div>
+<div class="float-bg" style="top:20%;right:0%;animation-delay:1.2s;">💖</div>
+<div class="float-bg" style="top:40%;left:0%;animation-delay:2.4s;">🌟</div>
+<div class="float-bg" style="top:55%;right:1%;animation-delay:0.6s;">🌷</div>
+<div class="float-bg" style="top:72%;left:2%;animation-delay:1.8s;">✨</div>
+<div class="float-bg" style="top:88%;right:2%;animation-delay:3s;">💫</div>
 
 <!-- SVGデコ：クローバー・音符・羽・ハート -->
 <!-- クローバー（ピンク） -->
@@ -995,7 +890,7 @@ textarea.field-input { resize: vertical; min-height: 78px; line-height: 1.8; }
   </div>
 </footer>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html-to-image/1.11.11/html-to-image.min.js"></script>
 <script>
 // ── 数字のみ入力 & 自動フォーカス ─────────────────────────────
 (function() {
@@ -1034,11 +929,11 @@ var ZODIAC = [
   { name:'みずがめ座', emoji:'🫧',  sym:'♒', grad:['#7ad0f0','#b8e8ff','#3a98d8','#e0f4ff'], accent:'#0a5888' },
   { name:'うお座',    emoji:'🐟', sym:'♓', grad:['#98b8e8','#c8d8f8','#5878c8','#dce8ff'], accent:'#283888' },
   { name:'おひつじ座', emoji:'🐏', sym:'♈', grad:['#ff9888','#ffd8c8','#e84830','#fff0e8'], accent:'#901820' },
-  { name:'おうし座',  emoji:'🐂', sym:'♉', grad:['#88d888','#c8f0b8','#409848','#e8fce0'], accent:'#205828' },
+  { name:'おうし座',  emoji:'🌷', sym:'♉', grad:['#88d888','#c8f0b8','#409848','#e8fce0'], accent:'#205828' },
   { name:'ふたご座',  emoji:'👯', sym:'♊', grad:['#f8e050','#fff8a0','#d8a808','#fffce0'], accent:'#806000' },
   { name:'かに座',    emoji:'🦀', sym:'♋', grad:['#e8a8e0','#fce0f8','#c060c8','#fff0ff'], accent:'#780878' },
   { name:'しし座',    emoji:'🦁', sym:'♌', grad:['#f8c840','#fff0a0','#e09000','#fff8e0'], accent:'#805000' },
-  { name:'おとめ座',  emoji:'🎀', sym:'♍', grad:['#a8d868','#d8f8a8','#589830','#f0fce0'], accent:'#285818' },
+  { name:'おとめ座',  emoji:'🌾', sym:'♍', grad:['#a8d868','#d8f8a8','#589830','#f0fce0'], accent:'#285818' },
   { name:'てんびん座', emoji:'⚖️', sym:'♎', grad:['#d098e8','#f0d8ff','#a060d8','#faf0ff'], accent:'#601890' },
   { name:'さそり座',  emoji:'🦂', sym:'♏', grad:['#e06888','#f8b8d0','#b03050','#fce8f0'], accent:'#700030' },
   { name:'いて座',    emoji:'🏹', sym:'♐', grad:['#7898e8','#c0d0ff','#3858c8','#dce8ff'], accent:'#182070' },
@@ -1392,24 +1287,42 @@ function postToX() {
 }
 
 // ── 画像保存 ──────────────────────────────────────────────────
+// A5サイズ (300dpi): 1748×2480px
+var A5_W = 1748, A5_H = 2480;
+
 function captureCard(callback) {
   var card = document.getElementById('output-card');
-  card.classList.add('capture-mode');
-  // 1フレーム待ってからキャプチャ（スタイル適用を確実に）
-  requestAnimationFrame(function() {
-    requestAnimationFrame(function() {
-      html2canvas(card, {
-        scale: 2, useCORS: true, backgroundColor: '#ffffff',
-        ignoreElements: function(el) {
-          return el.classList && el.classList.contains('body-pattern');
-        }
-      }).then(function(canvas) {
-        card.classList.remove('capture-mode');
-        callback(canvas);
-      }).catch(function() {
-        card.classList.remove('capture-mode');
-      });
-    });
+  // html-to-image はブラウザネイティブ描画のためcapture-mode不要
+  htmlToImage.toPng(card, {
+    width: card.scrollWidth,
+    height: card.scrollHeight,
+    pixelRatio: 3,
+    backgroundColor: '#ffffff',
+    filter: function(node) {
+      return !(node.classList && node.classList.contains('body-pattern'));
+    }
+  }).then(function(dataUrl) {
+    // A5リサイズ
+    var img = new Image();
+    img.onload = function() {
+      var canvas = document.createElement('canvas');
+      canvas.width = A5_W;
+      canvas.height = A5_H;
+      var ctx = canvas.getContext('2d');
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, A5_W, A5_H);
+      // アスペクト比を保ってA5に収める（上寄せ中央）
+      var scale = Math.min(A5_W / img.width, A5_H / img.height);
+      var w = img.width * scale;
+      var h = img.height * scale;
+      var x = (A5_W - w) / 2;
+      var y = (A5_H - h) / 2;
+      ctx.drawImage(img, x, y, w, h);
+      callback(canvas);
+    };
+    img.src = dataUrl;
+  }).catch(function(err) {
+    console.error('capture error:', err);
   });
 }
 
