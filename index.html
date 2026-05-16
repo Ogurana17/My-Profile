@@ -180,11 +180,8 @@ body {
   text-shadow: 0 0 10px rgba(255,150,220,0.8), 0 0 20px rgba(255,100,200,0.4);
 }
 
-/* ─── 入力カード（もやもやすりガラス） ─── */
+/* ─── 入力カード（擬似すりガラス：html2canvas対応） ─── */
 .card {
-  background: rgba(255,255,255,0.28);
-  backdrop-filter: blur(22px);
-  -webkit-backdrop-filter: blur(22px);
   border: 2px solid rgba(255,255,255,0.65);
   border-radius: 32px;
   padding: 28px 26px 34px;
@@ -194,9 +191,16 @@ body {
   z-index: 1;
   box-shadow:
     0 8px 40px rgba(200,80,140,0.28),
-    0 0 0 1px rgba(255,180,230,0.25),
-    0 2px 0 rgba(255,255,255,0.7) inset,
-    0 0 60px rgba(197,61,255,0.08);
+    0 0 0 1px rgba(255,180,230,0.25);
+  overflow: hidden;
+}
+/* すりガラス背景（::after でぼかした白を敷く） */
+.card::after {
+  content: '';
+  position: absolute; inset: 0;
+  border-radius: 30px;
+  background: rgba(255,255,255,0.72);
+  z-index: -2;
 }
 /* もやもや枠の光彩 */
 .card::before {
@@ -208,7 +212,7 @@ body {
     rgba(197,61,255,0.25) 30%,
     rgba(61,200,255,0.25) 60%,
     rgba(61,255,180,0.2) 100%);
-  z-index: -1;
+  z-index: -3;
   filter: blur(4px);
   animation: border-glow 5s ease-in-out infinite;
 }
@@ -470,11 +474,9 @@ textarea.field-input { resize: vertical; min-height: 78px; line-height: 1.8; }
   font-family: 'KleeOne', sans-serif;
 }
 
-/* ── ボディ（もやもやすりガラス） ── */
+/* ── ボディ ── */
 .output-body {
-  background: rgba(255,248,255,0.86);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
+  background: linear-gradient(160deg, #fff8ff 0%, #fff0f8 40%, #f8f0ff 80%, #f0f8ff 100%);
   padding: 22px 22px 24px;
   position: relative;
 }
@@ -526,7 +528,7 @@ textarea.field-input { resize: vertical; min-height: 78px; line-height: 1.8; }
   margin-bottom: 12px; position: relative; z-index: 1;
 }
 .out-item {
-  background: rgba(255,255,255,0.78);
+  background: rgba(255,252,255,0.92);
   border-radius: 16px; padding: 10px 12px;
   position: relative; overflow: hidden;
   box-shadow: 0 2px 8px rgba(200,80,160,0.08);
@@ -570,7 +572,6 @@ textarea.field-input { resize: vertical; min-height: 78px; line-height: 1.8; }
   background: linear-gradient(90deg, #ff3dac, #c53dff);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent;
   background-clip: text; padding-left: 8px;
-  filter: drop-shadow(0 0 3px rgba(255,61,172,0.4));
 }
 .out-val {
   font-size: 14px; line-height: 1.5;
@@ -581,11 +582,11 @@ textarea.field-input { resize: vertical; min-height: 78px; line-height: 1.8; }
 
 .out-message-box {
   border-radius: 18px; padding: 14px 16px; margin-top: 4px;
-  background: rgba(255,245,255,0.92);
+  background: linear-gradient(135deg, #fff5ff, #f8f0ff, #fff0f8);
   position: relative; z-index: 1;
-  box-shadow: 0 0 0 2px rgba(197,61,255,0.28),
-              0 0 16px rgba(197,61,255,0.12),
-              inset 0 0 20px rgba(255,200,240,0.15);
+  border: 1.5px solid rgba(197,61,255,0.25);
+  box-shadow: 0 0 12px rgba(197,61,255,0.1),
+              inset 0 0 20px rgba(255,200,240,0.12);
 }
 .out-message-label {
   font-size: 10px; font-weight: 400; font-family: 'KleeOne', sans-serif;
@@ -698,6 +699,37 @@ textarea.field-input { resize: vertical; min-height: 78px; line-height: 1.8; }
   from { opacity: 0.4; transform: scale(0.85) rotate(-8deg); }
   to   { opacity: 1;   transform: scale(1.15) rotate(8deg); }
 }
+
+/* ── キャプチャ用：グラデーション文字をsolid colorに ── */
+.cap .out-name {
+  background: none !important;
+  -webkit-text-fill-color: #a01860 !important;
+  animation: none !important;
+}
+.cap .out-key {
+  background: none !important;
+  -webkit-text-fill-color: #c040a0 !important;
+}
+.cap .out-item:nth-child(2n) .out-key {
+  -webkit-text-fill-color: #00a0c0 !important;
+}
+.cap .out-item:nth-child(3n) .out-key {
+  -webkit-text-fill-color: #d07000 !important;
+}
+.cap .out-bday {
+  background: none !important;
+  -webkit-text-fill-color: #c040a0 !important;
+}
+.cap .out-message-label {
+  background: none !important;
+  -webkit-text-fill-color: #9030d0 !important;
+}
+.cap .card::before,
+.cap .output-card::before {
+  display: none !important;
+}
+
+
 
 </style>
 </head>
@@ -890,7 +922,7 @@ textarea.field-input { resize: vertical; min-height: 78px; line-height: 1.8; }
   </div>
 </footer>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html-to-image/1.11.11/html-to-image.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script>
 // ── 数字のみ入力 & 自動フォーカス ─────────────────────────────
 (function() {
@@ -1318,63 +1350,55 @@ function captureCard(callback) {
   var card    = document.getElementById('output-card');
   var section = document.getElementById('output-section');
 
-  // ── キャプチャ前のインラインスタイルを完全にバックアップ ──
-  // card には generate() が動的に設定した border/shadow/background が入っている
-  // section は display:block のみなので style属性自体が存在しない場合がある
-  var savedCardStyle    = card.style.cssText;
-  var savedSectionStyle = section.style.cssText;
+  // キャプチャ用クラスを付与（グラデ文字→solid色、疑似要素非表示）
+  card.classList.add('cap');
 
-  // A5 幅に一時拡張（body-pattern は非表示に）
-  var bp = card.querySelector('.body-pattern');
-  var savedBpDisplay = bp ? bp.style.display : '';
-  if (bp) bp.style.display = 'none';
+  // A5幅に一時拡張
+  var origW  = card.style.width;
+  var origMW = card.style.maxWidth;
+  var origSW = section.style.width;
+  var origSMW = section.style.maxWidth;
 
   card.style.width    = A5_CSS_W + 'px';
   card.style.maxWidth = A5_CSS_W + 'px';
-  section.style.maxWidth = A5_CSS_W + 'px';
   section.style.width    = A5_CSS_W + 'px';
+  section.style.maxWidth = A5_CSS_W + 'px';
 
-  // スタイル確定を2フレーム待つ
+  function restore() {
+    card.classList.remove('cap');
+    card.style.width    = origW;
+    card.style.maxWidth = origMW;
+    section.style.width    = origSW;
+    section.style.maxWidth = origSMW;
+  }
+
   requestAnimationFrame(function() {
     requestAnimationFrame(function() {
-      var opts = {
-        width:  A5_CSS_W,
+      html2canvas(card, {
+        scale: 3,
+        useCORS: true,
+        backgroundColor: null,
+        width: A5_CSS_W,
         height: card.scrollHeight,
-        pixelRatio: 3,
-        backgroundColor: '#ffffff'
-      };
-
-      function restore() {
-        card.style.cssText    = savedCardStyle;
-        section.style.cssText = savedSectionStyle;
-        if (bp) bp.style.display = savedBpDisplay;
-      }
-
-      // iOS: 初回レンダリング不完全のため2回呼ぶ（既知 workaround）
-      htmlToImage.toPng(card, opts)
-        .then(function() { return htmlToImage.toPng(card, opts); })
-        .then(function(dataUrl) {
-          restore();
-
-          var img = new Image();
-          img.onload = function() {
-            var canvas = document.createElement('canvas');
-            canvas.width  = A5_W;
-            canvas.height = A5_H;
-            var ctx = canvas.getContext('2d');
-            ctx.fillStyle = '#ffffff';
-            ctx.fillRect(0, 0, A5_W, A5_H);
-            var sc = Math.min(1, A5_H / img.height);
-            var dw = img.width * sc, dh = img.height * sc;
-            ctx.drawImage(img, (A5_W - dw) / 2, 0, dw, dh);
-            callback(canvas);
-          };
-          img.src = dataUrl;
-        })
-        .catch(function(err) {
-          restore();
-          console.error('capture error:', err);
-        });
+        ignoreElements: function(el) {
+          return el.classList && el.classList.contains('body-pattern');
+        }
+      }).then(function(raw) {
+        restore();
+        // A5キャンバスに上詰めで配置
+        var canvas = document.createElement('canvas');
+        canvas.width = A5_W; canvas.height = A5_H;
+        var ctx = canvas.getContext('2d');
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, A5_W, A5_H);
+        var sc = Math.min(A5_W / raw.width, A5_H / raw.height);
+        var dw = raw.width * sc, dh = raw.height * sc;
+        ctx.drawImage(raw, (A5_W - dw) / 2, 0, dw, dh);
+        callback(canvas);
+      }).catch(function(err) {
+        restore();
+        console.error('capture error:', err);
+      });
     });
   });
 }
